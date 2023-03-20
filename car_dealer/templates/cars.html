@@ -7,7 +7,7 @@
 
                     <br>
 
-                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, alias.</p>
+                    <p class="lead">We have quality and affordable cars for you. Pick your choice here.</p>
                </div>
           </div>
      </section>
@@ -137,17 +137,17 @@
 <!--                                        </select>-->
 <!--                                   </div>-->
 
-                                   <div class="form-group">
-                                        <label>Doors:</label>
-                                        
-                                        <select class="form-control">
-                                             <option value="">-- All --</option>
-                                             <option value="">option 1</option>
-                                             <option value="">option 2</option>
-                                             <option value="">option 3</option>
-                                             <option value="">option 4</option>
-                                        </select>
-                                   </div>
+<!--                                   <div class="form-group">-->
+<!--                                        <label>Doors:</label>-->
+<!--                                        -->
+<!--                                        <select class="form-control">-->
+<!--                                             <option value="">&#45;&#45; All &#45;&#45;</option>-->
+<!--                                             <option value="">option 1</option>-->
+<!--                                             <option value="">option 2</option>-->
+<!--                                             <option value="">option 3</option>-->
+<!--                                             <option value="">option 4</option>-->
+<!--                                        </select>-->
+<!--                                   </div>-->
 
                                    <div class="form-group">
                                         <label>Number of seats:</label>
@@ -168,33 +168,34 @@
 
                     <div class="col-lg-9 col-xs-12">
                          <div class="row">
-                              <div class="col-lg-6 col-md-4 col-sm-6">
-                                   <div class="courses-thumb courses-thumb-secondary">
-                                        <div class="courses-top">
-                                             <div class="courses-image">
-                                                  <img src="../static/images/product-1-720x480.jpg" class="img-responsive" alt="">
+                              {% for car in cars %}
+                                   <div class="col-lg-6 col-md-4 col-sm-6">
+                                        <div class="courses-thumb courses-thumb-secondary">
+                                             <div class="courses-top">
+                                                  <div class="courses-image">
+                                                       <img src="{{ url_for('static', filename='car_photos/' + car.photo) }}" class="img-responsive" alt="{{ car.name }}">
+                                                  </div>
+                                                  <div class="courses-date">
+                                                       <span title="Author"><i class="fa fa-dashboard"></i> {{ car.mileage }}</span>
+                                                       <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>
+                                                       <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                                                  </div>
                                              </div>
-                                             <div class="courses-date">
-                                                  <span title="Author"><i class="fa fa-dashboard"></i> 130 000km</span>
-                                                  <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>
-                                                  <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+
+                                             <div class="courses-detail">
+                                                  <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+
+                                                  <p class="lead"><strong>${{ car.price }}</strong></p>
+
+                                                  <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; Used vehicle</p>
                                              </div>
-                                        </div>
 
-                                        <div class="courses-detail">
-                                             <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
-
-                                             <p class="lead"><small><del> $11199.00</del></small> <strong>$11179.00</strong></p>
-
-                                             <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; Used vehicle</p>
-                                        </div>
-
-                                        <div class="courses-info">
-                                             <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
+                                             <div class="courses-info">
+                                                  <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
+                                             </div>
                                         </div>
                                    </div>
-                              </div>
-
+                              {% endfor %}
                               <div class="col-lg-6 col-md-4 col-sm-6">
                                    <div class="courses-thumb courses-thumb-secondary">
                                         <div class="courses-top">
@@ -276,59 +277,59 @@
                                    </div>
                               </div>
 
-                              <div class="col-lg-6 col-md-4 col-sm-6">
-                                   <div class="courses-thumb courses-thumb-secondary">
-                                        <div class="courses-top">
-                                             <div class="courses-image">
-                                                  <img src="../static/images/product-5-720x480.jpg" class="img-responsive" alt="">
-                                             </div>
-                                             <div class="courses-date">
-                                                  <span title="Author"><i class="fa fa-dashboard"></i> 130 000km</span>
-                                                  <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>
-                                                  <span title="Views"><i class="fa fa-cog"></i> Manual</span>
-                                             </div>
-                                        </div>
+<!--                              <div class="col-lg-6 col-md-4 col-sm-6">-->
+<!--                                   <div class="courses-thumb courses-thumb-secondary">-->
+<!--                                        <div class="courses-top">-->
+<!--                                             <div class="courses-image">-->
+<!--                                                  <img src="../static/images/product-5-720x480.jpg" class="img-responsive" alt="">-->
+<!--                                             </div>-->
+<!--                                             <div class="courses-date">-->
+<!--                                                  <span title="Author"><i class="fa fa-dashboard"></i> 130 000km</span>-->
+<!--                                                  <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>-->
+<!--                                                  <span title="Views"><i class="fa fa-cog"></i> Manual</span>-->
+<!--                                             </div>-->
+<!--                                        </div>-->
 
-                                        <div class="courses-detail">
-                                             <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+<!--                                        <div class="courses-detail">-->
+<!--                                             <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>-->
 
-                                             <p class="lead"><small><del> $11199.00</del></small> <strong>$11179.00</strong></p>
+<!--                                             <p class="lead"><small><del> $11199.00</del></small> <strong>$11179.00</strong></p>-->
 
-                                             <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; New vehicle</p>
-                                        </div>
+<!--                                             <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; New vehicle</p>-->
+<!--                                        </div>-->
 
-                                        <div class="courses-info">
-                                             <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
-                                        </div>
-                                   </div>
-                              </div>
+<!--                                        <div class="courses-info">-->
+<!--                                             <a href="#" class="section-btn btn btn-primary btn-block">View More</a>-->
+<!--                                        </div>-->
+<!--                                   </div>-->
+<!--                              </div>-->
 
-                              <div class="col-lg-6 col-md-4 col-sm-6">
-                                   <div class="courses-thumb courses-thumb-secondary">
-                                        <div class="courses-top">
-                                             <div class="courses-image">
-                                                  <img src="../static/images/product-6-720x480.jpg" class="img-responsive" alt="">
-                                             </div>
-                                             <div class="courses-date">
-                                                  <span title="Author"><i class="fa fa-dashboard"></i> 130 000km</span>
-                                                  <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>
-                                                  <span title="Views"><i class="fa fa-cog"></i> Manual</span>
-                                             </div>
-                                        </div>
+<!--                              <div class="col-lg-6 col-md-4 col-sm-6">-->
+<!--                                   <div class="courses-thumb courses-thumb-secondary">-->
+<!--                                        <div class="courses-top">-->
+<!--                                             <div class="courses-image">-->
+<!--                                                  <img src="../static/images/product-6-720x480.jpg" class="img-responsive" alt="">-->
+<!--                                             </div>-->
+<!--                                             <div class="courses-date">-->
+<!--                                                  <span title="Author"><i class="fa fa-dashboard"></i> 130 000km</span>-->
+<!--                                                  <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>-->
+<!--                                                  <span title="Views"><i class="fa fa-cog"></i> Manual</span>-->
+<!--                                             </div>-->
+<!--                                        </div>-->
 
-                                        <div class="courses-detail">
-                                             <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+<!--                                        <div class="courses-detail">-->
+<!--                                             <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>-->
 
-                                             <p class="lead"><small><del> $11199.00</del></small> <strong>$11179.00</strong></p>
+<!--                                             <p class="lead"><small><del> $11199.00</del></small> <strong>$11179.00</strong></p>-->
 
-                                             <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; New vehicle</p>
-                                        </div>
+<!--                                             <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; New vehicle</p>-->
+<!--                                        </div>-->
 
-                                        <div class="courses-info">
-                                             <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
-                                        </div>
-                                   </div>
-                              </div>
+<!--                                        <div class="courses-info">-->
+<!--                                             <a href="#" class="section-btn btn btn-primary btn-block">View More</a>-->
+<!--                                        </div>-->
+<!--                                   </div>-->
+<!--                              </div>-->
                          </div>
                     </div>
                </div>

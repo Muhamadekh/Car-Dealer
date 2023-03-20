@@ -37,18 +37,21 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            print("User exist")
-            login_user(user, remember=form.remember.data)
-            flash("You have sucessfully logged in", "success")
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
-        else:
-            flash("Please check your email or password", "warning")
-    return render_template('login.html', form=form, title='Log in')
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    else:
+        form = LoginForm()
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user and bcrypt.check_password_hash(user.password, form.password.data):
+                print("User exist")
+                login_user(user, remember=form.remember.data)
+                flash("You have sucessfully logged in", "success")
+                next_page = request.args.get('next')
+                return redirect(next_page) if next_page else redirect(url_for('home'))
+            else:
+                flash("Please check your email or password", "warning")
+        return render_template('login.html', form=form, title='Log in')
 
 
 @app.route('/logout')
@@ -98,7 +101,7 @@ def save_car_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/car_photos', picture_fn)
 
-    output_size = (125, 125)
+    output_size = (750, 500)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -112,8 +115,8 @@ def sell_car():
     form = SellCarForm()
     if form.validate_on_submit():
         picture_file = save_car_picture(form.car_photos.data)
-        car = Car(name=form.name.data, mileage=form.mileage.data, price=form.price.data, user_id=current_user.id,
-                  photo=picture_file)
+        car = Car(name=form.name.data, model=form.model.data, mileage=form.mileage.data, price=form.price.data,
+                  user_id=current_user.id, photo=picture_file)
         db.session.add(car)
         db.session.commit()
         flash('Your successfully uploaded your car', 'success')
@@ -123,8 +126,8 @@ def sell_car():
 
 @app.route('/buy_car', methods=['GET', 'POST'])
 def buy_car():
-    # cars = Car.query.all()
-    return render_template('cars.html')
+    cars = Car.query.all()
+    return render_template('cars.html', cars=cars)
 
 
 @app.route('/car_details')

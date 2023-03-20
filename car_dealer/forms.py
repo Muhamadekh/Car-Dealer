@@ -34,7 +34,7 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Upload Profile Photo', validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Upload Profile Photo', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
     submit = SubmitField('Upload Photo')
 
     def validate_username(self, username):
@@ -51,8 +51,9 @@ class UpdateAccountForm(FlaskForm):
 
 
 class SellCarForm(FlaskForm):
-    name = StringField('Car type', validators=[DataRequired()])
+    name = StringField('Car Make, e.g, Toyota, Nissan, etc.', validators=[DataRequired()])
+    model = StringField('Car Model, e.g, Premio, Mark X, etc.', validators=[DataRequired()])
     mileage = IntegerField('Mileage', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
-    car_photos = FileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png'])])
+    car_photos = FileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
     submit = SubmitField('Upload')

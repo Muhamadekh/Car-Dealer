@@ -3,71 +3,88 @@
     <div class="container form-group mt-4 mb-4">
         <form action="" method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4 mt-4">Register Today</legend>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        {{ form.name.label (class="form-control-label")}}
-                            {% if form.name.errors %}
-                                {{ form.name (class="form-control form-control-lg is-invalid")}}
+            <fieldset class="form-group" style="margin-top: 3rem;">
+                <legend class="border-bottom">You got a car to sell? Fill in the form below.</legend>
+                <div class="row" id="carUploadForm">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.name.label (class="form-control-label")}}
+                                {% if form.name.errors %}
+                                    {{ form.name (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.name.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.name (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.model.label (class="form-control-label")}}
+                                {% if form.model.errors %}
+                                    {{ form.model (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.model.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.model (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.mileage.label (class="form-control-label")}}
+                            {% if form.mileage.errors %}
+                                {{ form.mileage (class="form-control form-control-lg is-invalid")}}
                                 <ul class="invalid-feedback">
-                                    {% for error in form.name.errors %}
+                                    {% for error in form.mileage.errors %}
                                         <span>{{ error }}</span>
                                     {% endfor %}
                                 </ul>
                             {% else %}
-                                {{ form.name (class="form-control form-control-lg")}}
+                                {{ form.mileage (class="form-control form-control-lg")}}
                             {% endif %}
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        {{ form.mileage.label (class="form-control-label")}}
-                        {% if form.mileage.errors %}
-                            {{ form.mileage (class="form-control form-control-lg is-invalid")}}
-                            <ul class="invalid-feedback">
-                                {% for error in form.mileage.errors %}
-                                    <span>{{ error }}</span>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.price.label (class="form-control-label")}}
+                            {% if form.price.errors %}
+                                {{ form.price (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.price.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.price (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-4 mt-12">
+                            {{ form.car_photos.label }}
+                            {% if form.car_photos.errors %}
+                                {{ form.car_photos (class="form-control-file")}}
+                                {% for error in form.car_photos.errors %}
+                                    <div class="text-danger">
+                                        {{ error}}
+                                    </div>
                                 {% endfor %}
-                            </ul>
-                        {% else %}
-                            {{ form.mileage (class="form-control form-control-lg")}}
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        {{ form.price.label (class="form-control-label")}}
-                        {% if form.price.errors %}
-                            {{ form.price (class="form-control form-control-lg is-invalid")}}
-                            <ul class="invalid-feedback">
-                                {% for error in form.price.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            {{ form.price (class="form-control form-control-lg")}}
-                        {% endif %}
-                    </div>
-                </div>
-                <div>
-                    <div class="col-md-4 mt-2">
-                        {{ form.car_photos.label }}
-                        {% if form.car_photos.errors %}
-                            {{ form.car_photos (class="form-control-file")}}
-                            {% for error in form.car_photos.errors %}
-                                <div class="text-danger">
-                                    {{ error}}
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            {{ form.car_photos (class="form-control-file")}}
-                        {% endif %}
-                    </div>
-                    </div>
-                <div>
-                    <div class="col-md-4">
-                        {{ form.submit (class="btn btn-outline-info")}}
+                            {% else %}
+                                {{ form.car_photos (class="form-control-file")}}
+                            {% endif %}
+                        </div>
+                        </div>
+                    <div>
+                        <div class="col-md-12">
+                            {{ form.submit (class="btn btn-outline-info", style="background-color: #008CBA; color: white; margin-top: 1rem;")}}
+                        </div>
                     </div>
                 </div>
             </fieldset>

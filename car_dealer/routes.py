@@ -115,8 +115,10 @@ def sell_car():
     form = SellCarForm()
     if form.validate_on_submit():
         picture_file = save_car_picture(form.car_photos.data)
-        car = Car(name=form.name.data, model=form.model.data, mileage=form.mileage.data, price=form.price.data,
-                  user_id=current_user.id, photo=picture_file)
+        car = Car(make=form.make.data, model=form.model.data, mileage=form.mileage.data, price=form.price.data,
+                  user_id=current_user.id, condition=form.condition.data, fuel=form.fuel.data, seats=form.seats.data,
+                  mfg_year=form.mfg_year.data,  engine_size=form.engine_size.data, description=form.description.data,
+                  photo=picture_file)
         db.session.add(car)
         db.session.commit()
         flash('Your successfully uploaded your car', 'success')

@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, IntegerField, SelectField, \
+    TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from car_dealer.models import User
 from flask_login import current_user
@@ -50,10 +51,19 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('This email is taken. Please choose another one.')
 
 
+condition_drop_list = ['New', 'Used']
+fuel_drop_list = ['Petrol', 'Diesel']
+fuel_drop_list = ['Petrol', 'Diesel']
 class SellCarForm(FlaskForm):
-    name = StringField('Car Make, e.g, Toyota, Nissan, etc.', validators=[DataRequired()])
+    condition = SelectField('Car Condition', choices=condition_drop_list, default=1)
+    make = StringField('Car Make, e.g, Toyota, Nissan, etc.', validators=[DataRequired()])
     model = StringField('Car Model, e.g, Premio, Mark X, etc.', validators=[DataRequired()])
     mileage = IntegerField('Mileage', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
+    fuel = SelectField('Fuel Type', choices=fuel_drop_list, default=1)
+    seats = IntegerField('Number of Seats', validators=[DataRequired()])
+    mfg_year = IntegerField('Manufacture Year', validators=[DataRequired()])
+    engine_size = IntegerField('Engine Size', validators=[DataRequired()])
+    description = TextAreaField('Short description', validators=[DataRequired(), Length(min=10, max=140)])
     car_photos = FileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
     submit = SubmitField('Upload')

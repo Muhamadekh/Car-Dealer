@@ -23,10 +23,16 @@ class User(db.Model, UserMixin):
 
 class Car(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    condition = db.Column(db.String, nullable=False)
+    make = db.Column(db.String(50), nullable=False)
     mileage = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    model = db.Column(db.String, nullable=False)
+    model = db.Column(db.String(50), nullable=False)
+    fuel = db.Column(db.String, nullable=False)
+    seats = db.Column(db.Integer, nullable=False)
+    mfg_year = db.Column(db.Integer, nullable=False)
+    engine_size = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.Text, nullable=False)
     photo = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 

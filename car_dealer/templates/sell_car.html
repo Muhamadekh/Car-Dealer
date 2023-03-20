@@ -8,16 +8,31 @@
                 <div class="row" id="carUploadForm">
                     <div class="form-group">
                         <div class="col-md-12">
-                            {{ form.name.label (class="form-control-label")}}
-                                {% if form.name.errors %}
-                                    {{ form.name (class="form-control form-control-lg is-invalid")}}
+                            {{ form.condition.label (class="form-control-label")}}
+                                {% if form.condition.errors %}
+                                    {{ form.condition (class="form-control form-control-lg is-invalid")}}
                                     <ul class="invalid-feedback">
-                                        {% for error in form.name.errors %}
+                                        {% for error in form.condition.errors %}
                                             <span>{{ error }}</span>
                                         {% endfor %}
                                     </ul>
                                 {% else %}
-                                    {{ form.name (class="form-control form-control-lg")}}
+                                    {{ form.condition (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.make.label (class="form-control-label")}}
+                                {% if form.make.errors %}
+                                    {{ form.make (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.make.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.make (class="form-control form-control-lg")}}
                                 {% endif %}
                         </div>
                     </div>
@@ -66,7 +81,82 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.fuel.label (class="form-control-label")}}
+                            {% if form.fuel.errors %}
+                                {{ form.fuel (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.fuel.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.fuel (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.seats.label (class="form-control-label")}}
+                            {% if form.seats.errors %}
+                                {{ form.seats (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.seats.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.seats (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.mfg_year.label (class="form-control-label")}}
+                            {% if form.mfg_year.errors %}
+                                {{ form.mfg_year (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.mfg_year.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.mfg_year (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.engine_size.label (class="form-control-label")}}
+                            {% if form.engine_size.errors %}
+                                {{ form.engine_size (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.engine_size.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.engine_size (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.description.label (class="form-control-label")}}
+                            {% if form.description.errors %}
+                                {{ form.description (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.description.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.description (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-md-4 mt-12">
                             {{ form.car_photos.label }}
                             {% if form.car_photos.errors %}
@@ -80,7 +170,7 @@
                                 {{ form.car_photos (class="form-control-file")}}
                             {% endif %}
                         </div>
-                        </div>
+                    </div>
                     <div>
                         <div class="col-md-12">
                             {{ form.submit (class="btn btn-outline-info", style="background-color: #008CBA; color: white; margin-top: 1rem;")}}

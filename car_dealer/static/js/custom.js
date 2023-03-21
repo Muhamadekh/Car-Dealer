@@ -105,17 +105,33 @@ $("#searchBox").on("input",(e)=>{
     getData(`http://${window.location.hostname}:5000/livesearch`,"POST",{"text" : search_term},(data)=>{
     let cars_searched = "";
         for (let i = 0; i < data.length; i++) {
-            cars_searched+= `<div class="col-sm">
-                  <div class="card">
-                      <img class="card-img-top img-thumbnail" src="${data[i].photo}">
-                      <div class="card-body">
-                        <h5 class="card-title">Type: ${data[i].name}<h6 class="card-text">Price: ${data[i].price}
-                        <span class="dot"></span>Mileage: ${data[i].mileage}</h6></h5>
-                        <a href="#" class="btn btn-primary">Learn More</a>
-                      </div>
-                  </div>
-            </div>`
+          cars_searched += `<div class="col-lg-6 col-md-4 col-sm-6">
+                <div class="courses-thumb courses-thumb-secondary">
+                     <div class="courses-top">
+                          <div class="courses-image">
+                               <img src="${data[i].photo}" class="img-responsive" alt="${data[i].make}">
+                          </div>
+                          <div class="courses-date">
+                               <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage}</span>
+                               <span title="Author"><i class="fa fa-cube"></i> ${data[i].engine_size}cc</span>
+                               <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                          </div>
+                     </div>
 
+                     <div class="courses-detail">
+                          <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+
+                          <p class="lead"><strong>$${data[i].price}</strong></p>
+
+                          <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
+                     </div>
+
+                     <div class="courses-info">
+                          <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
+                     </div>
+                </div>
+          </div>`
         }
+
     cars_div.html(cars_searched)
 })})

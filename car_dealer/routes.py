@@ -141,16 +141,21 @@ def car_details():
 def livesearch():
     search = request.json["text"]
     print(search)
-    results = Car.query.filter(Car.name.like(f"{search}%")).all()
+    results = Car.query.filter(Car.make.like(f"{search}%")).all()
     car_objects = []
     for result in results:
         car = {
             "id": result.id,
-            "name": result.name,
+            "make": result.make,
             "mileage": result.mileage,
             "price": result.price,
             "photo": url_for('static', filename='car_photos/' + result.photo, _external=True),
-            "user_id": result.user_id
+            "user_id": result.user_id,
+            "model": result.model,
+            "engine_size": result.engine_size,
+            "condition": result.condition,
+            "fuel": result.fuel
+
         }
         car_objects.append(car)
 

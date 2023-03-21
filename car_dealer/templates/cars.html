@@ -9,6 +9,9 @@
 
                     <p class="lead">We have quality and affordable cars for you. Pick your choice here.</p>
                </div>
+               <div class="form-outline">
+                 <input type="search" id="searchBox" class="form-control" placeholder="Search cars by Brand, Model, etc" aria-label="Search" />
+               </div>
           </div>
      </section>
 
@@ -167,27 +170,28 @@
                     </div>
 
                     <div class="col-lg-9 col-xs-12">
-                         <div class="row">
+                         <div class="row" id="cars_results">
                               {% for car in cars %}
                                    <div class="col-lg-6 col-md-4 col-sm-6">
                                         <div class="courses-thumb courses-thumb-secondary">
                                              <div class="courses-top">
                                                   <div class="courses-image">
-                                                       <img src="{{ url_for('static', filename='car_photos/' + car.photo) }}" class="img-responsive" alt="{{ car.name }}">
+                                                       <img src="{{ url_for('static', filename='car_photos/' + car.photo) }}" class="img-responsive" alt="{{ car.make }}">
                                                   </div>
                                                   <div class="courses-date">
                                                        <span title="Author"><i class="fa fa-dashboard"></i> {{ car.mileage }}</span>
-                                                       <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>
+                                                       <span title="Author"><i class="fa fa-cube"></i> {{ car.engine_size}}cc</span>
                                                        <span title="Views"><i class="fa fa-cog"></i> Manual</span>
                                                   </div>
                                              </div>
 
                                              <div class="courses-detail">
-                                                  <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+                                                  <h3><a href="#">{{ car.description }}</a></h3>
 
                                                   <p class="lead"><strong>${{ car.price }}</strong></p>
 
-                                                  <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; Used vehicle</p>
+                                                  <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.fuel }} &nbsp;&nbsp;/&nbsp;&nbsp;
+                                                       {{ car.mfg_year }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.condition }}</p>
                                              </div>
 
                                              <div class="courses-info">

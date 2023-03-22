@@ -135,3 +135,77 @@ $("#searchBox").on("input",(e)=>{
 
     cars_div.html(cars_searched)
 })})
+
+function dropDownSelection(){
+  let car_condition = $("#carCondition").val()
+  let car_make = $("#carMake").val()
+  let car_model = $("#carModel").val()
+  let car_fuel = $("#carFuel").val()
+  console.log(car_condition, car_make, car_model, car_fuel)
+  var obj = {}
+  if (car_condition != ''){
+    Object.assign(obj,{"condition":car_condition})
+  }
+  if (car_make != ''){
+    Object.assign(obj,{"make":car_make})
+  }
+  if (car_model != ''){
+    Object.assign(obj,{"model":car_model})
+  }
+  if (car_fuel != ''){
+    Object.assign(obj,{"fuel":car_fuel})
+  }
+  console.log(JSON.stringify(obj))
+  let cars_div = $("#cars_results")
+  cars_div.html("")
+  getData(`http://${window.location.hostname}:5000/dropdown_search`,"POST",obj,(data)=> {
+    let cars_selected = "";
+    if (data.length == 0){
+      cars_selected = "<div class='text-center'><h2> There are no cars with these specifications </h2></div>"
+    }
+        for (let i = 0; i < data.length; i++) {
+          cars_selected += `<div class="col-lg-6 col-md-4 col-sm-6">
+                <div class="courses-thumb courses-thumb-secondary">
+                     <div class="courses-top">
+                          <div class="courses-image">
+                               <img src="${data[i].photo}" class="img-responsive" alt="${data[i].make}">
+                          </div>
+                          <div class="courses-date">
+                               <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage}</span>
+                               <span title="Author"><i class="fa fa-cube"></i> ${data[i].engine_size}cc</span>
+                               <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                          </div>
+                     </div>
+
+                     <div class="courses-detail">
+                          <h3><a href="#">${data[i].description}</a></h3>
+
+                          <p class="lead"><strong>$${data[i].price}</strong></p>
+
+                          <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
+                     </div>
+
+                     <div class="courses-info">
+                          <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
+                     </div>
+                </div>
+          </div>`
+        }
+
+    cars_div.html(cars_selected)
+})}
+$("#carCondition").on("input",(e)=> {
+dropDownSelection()
+})
+
+$("#carMake").on("input",(e)=> {
+dropDownSelection()
+})
+$("#carModel").on("input",(e)=> {
+dropDownSelection()
+})
+
+$("#carFuel").on("input",(e)=> {
+dropDownSelection()
+})
+

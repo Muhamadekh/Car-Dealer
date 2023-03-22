@@ -174,7 +174,7 @@ https://templatemo.com/tm-516-known
 
   section {
     position: relative;
-    padding: 100px 0;
+    padding: 5px 0;
   }
 
   #team, 
@@ -895,7 +895,7 @@ https://templatemo.com/tm-516-known
   @media only screen and (max-width: 992px) {
     section,
     footer {
-      padding: 60px 0;
+      padding: 5px 0;
     }
 
     .home-slider .item {
@@ -1069,4 +1069,8 @@ https://templatemo.com/tm-516-known
   #flashMessage {
     text-align: center;
     border: 3px;
+  }
+
+  #listingPage{
+    margin-top: 5px !important;
   }

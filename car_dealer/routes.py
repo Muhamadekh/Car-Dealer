@@ -101,7 +101,7 @@ def save_car_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/car_photos', picture_fn)
 
-    output_size = (750, 500)
+    output_size = (345, 230)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -157,6 +157,36 @@ def livesearch():
             "fuel": result.fuel
 
         }
+        car_objects.append(car)
+
+    return jsonify(car_objects)
+
+
+@app.route('/dropdown_search', methods=['GET', 'POST'])
+def dropdown_search():
+    selected_term = request.json
+    print(selected_term)
+
+    results = Car.query.filter_by(**selected_term).all()
+    print(results)
+    car_objects = []
+
+    for result in results:
+        car = {
+            "id": result.id,
+            "make": result.make,
+            "mileage": result.mileage,
+            "price": result.price,
+            "photo": url_for('static', filename='car_photos/' + result.photo, _external=True),
+            "user_id": result.user_id,
+            "model": result.model,
+            "engine_size": result.engine_size,
+            "condition": result.condition,
+            "fuel": result.fuel,
+            "description": result.description
+
+        }
+
         car_objects.append(car)
 
     return jsonify(car_objects)

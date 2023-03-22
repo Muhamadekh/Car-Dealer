@@ -37,4 +37,4 @@ class Car(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f'{self.name}, {self.mileage}, {self.price})'
+        return f'{self.make}, {self.mileage}, {self.price})'

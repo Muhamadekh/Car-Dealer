@@ -56,8 +56,8 @@ fuel_drop_list = ['Petrol', 'Diesel']
 fuel_drop_list = ['Petrol', 'Diesel']
 class SellCarForm(FlaskForm):
     condition = SelectField('Car Condition', choices=condition_drop_list, default=1)
-    make = StringField('Car Make, e.g, Toyota, Nissan, etc.', validators=[DataRequired()])
-    model = StringField('Car Model, e.g, Premio, Mark X, etc.', validators=[DataRequired()])
+    make = StringField('Car Make, e.g, Toyota, Nissan, etc.', validators=[DataRequired(), Length(min=5, max=20)])
+    model = StringField('Car Model, e.g, Premio, Mark X, etc.', validators=[DataRequired(), Length(min=5, max=20)])
     mileage = IntegerField('Mileage', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
     fuel = SelectField('Fuel Type', choices=fuel_drop_list, default=1)
@@ -67,3 +67,13 @@ class SellCarForm(FlaskForm):
     description = TextAreaField('Short description', validators=[DataRequired(), Length(min=10, max=140)])
     car_photos = FileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
     submit = SubmitField('Upload')
+
+class LendCarForm(FlaskForm):
+    brand = StringField('Car Brand', validators=[DataRequired(), Length(min=5, max=20)])
+    model = StringField('Car Model', validators=[DataRequired(), Length(min=5, max=20)])
+    daily_rate = IntegerField('Daily Rate', validators=[DataRequired()])
+    photo = FileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
+    fuel = SelectField('Fuel Type', choices=fuel_drop_list)
+    seats = IntegerField('Number of Seats', validators=[DataRequired()])
+    description = TextAreaField('Short description', validators=[DataRequired(), Length(min=10, max=140)])
+    upload = SubmitField('Upload')

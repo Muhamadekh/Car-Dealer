@@ -9,7 +9,9 @@
 
                     <p class="lead">We have quality and affordable cars for you. Pick your choice here.</p>
                </div>
-               <div class="form-outline mb-2">
+          </div>
+          <div class="container">
+               <div class="form-outline" style="margin-bottom: 40px;">
                  <input type="search" id="searchBox" class="form-control" placeholder="Search cars by Brand, Model, etc" aria-label="Search" />
                </div>
           </div>
@@ -27,8 +29,9 @@
 
                                         <select class="form-control" id="carCondition">
                                              <option value="">All</option>
-                                             <option value="New">New</option>
-                                             <option value="Used">Used</option>
+                                             {% for condition in conditions_list%}
+                                                  <option value="{{ condition }}">{{ condition }}</option>
+                                             {% endfor %}
                                         </select>
                                    </div>
 
@@ -37,10 +40,9 @@
                                         
                                         <select class="form-control" id="carMake">
                                              <option value="">-- All --</option>
-                                             <option value="Toyota">Toyota</option>
-                                             <option value="Nissan">Nissan</option>
-                                             <option value="Mazda">Mazda</option>
-                                             <option value="Tesla">Tesla</option>
+                                             {% for make in make_list %}
+                                                  <option value="{{ make }}">{{make}}</option>
+                                             {% endfor %}
                                         </select>
                                    </div>
 
@@ -49,10 +51,9 @@
                                         
                                         <select class="form-control" id="carModel">
                                              <option value="">-- All --</option>
-                                             <option value="Probox">Probox</option>
-                                             <option value="Succeed">Succeed</option>
-                                             <option value="Alto">Alto</option>
-                                             <option value="">option 4</option>
+                                             {% for model in model_list %}
+                                                  <option value="{{ model }}">{{ model }}</option>
+                                             {% endfor %}
                                         </select>
                                    </div>
 
@@ -97,8 +98,9 @@
                                         
                                         <select class="form-control" id="carFuel">
                                              <option value="">-- All --</option>
-                                             <option value="Diesel">Diesel</option>
-                                             <option value="Petrol">Petrol</option>
+                                             {% for fuel in fuel_list %}
+                                                  <option value="{{fuel }}">{{ fuel }}</option>
+                                             {% endfor %}
                                         </select>
                                    </div>
 

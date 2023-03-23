@@ -1,0 +1,124 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container form-group mt-4 mb-4">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group" style="margin-top: 3rem;">
+                <legend class="border-bottom">You got a car to lend? Fill in the form below.</legend>
+                <div class="row" id="carUploadForm">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.brand.label (class="form-control-label")}}
+                                {% if form.brand.errors %}
+                                    {{ form.brand (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.brand.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.brand (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.model.label (class="form-control-label")}}
+                                {% if form.model.errors %}
+                                    {{ form.model (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.model.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.model (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.daily_rate.label (class="form-control-label")}}
+                                {% if form.daily_rate.errors %}
+                                    {{ form.daily_rate (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.daily_rate.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.daily_rate (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.fuel.label (class="form-control-label")}}
+                            {% if form.fuel.errors %}
+                                {{ form.fuel (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.fuel.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.fuel (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.seats.label (class="form-control-label")}}
+                            {% if form.seats.errors %}
+                                {{ form.seats (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.seats.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.seats (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.description.label (class="form-control-label")}}
+                            {% if form.description.errors %}
+                                {{ form.description (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.description.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.description (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 mt-12">
+                            {{ form.photo.label }}
+                            {% if form.photo.errors %}
+                                {{ form.photo (class="form-control-file")}}
+                                {% for error in form.photo.errors %}
+                                    <div class="text-danger">
+                                        {{ error}}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.photo (class="form-control-file")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12">
+                            {{ form.upload (class="btn btn-outline-info", style="background-color: #008CBA; color: white; margin-top: 1rem;")}}
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+{% endblock %}

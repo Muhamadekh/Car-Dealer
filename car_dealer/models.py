@@ -38,3 +38,16 @@ class Car(db.Model):
 
     def __repr__(self):
         return f'{self.make}, {self.mileage}, {self.price})'
+
+class LendCar(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    brand = db.Column(db.String(40), nullable=False)
+    model = db.Column(db.String(40), nullable=False)
+    daily_rate = db.Column(db.Integer, nullable=False)
+    fuel = db.Column(db.String, nullable=False)
+    seats = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    photo = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return f'{self.model}, {self.daily_rate}'

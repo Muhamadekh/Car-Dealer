@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from car_dealer import app, bcrypt, db
-from car_dealer.forms import RegistrationForm, LoginForm, UpdateAccountForm, SellCarForm
-from car_dealer.models import User, Car
+from car_dealer.forms import RegistrationForm, LoginForm, UpdateAccountForm, SellCarForm, LendCarForm
+from car_dealer.models import User, Car, LendCar
 from flask_login import login_user, logout_user, login_required, current_user
 
 
@@ -129,7 +129,21 @@ def sell_car():
 @app.route('/buy_car', methods=['GET', 'POST'])
 def buy_car():
     cars = Car.query.all()
-    return render_template('cars.html', cars=cars)
+    conditions_list = []
+    make_list = []
+    model_list = []
+    fuel_list = []
+    for car in cars:
+        if car.condition not in conditions_list:
+            conditions_list.append(car.condition)
+        if car.make not in make_list:
+            make_list.append(car.make)
+        if car.model not in model_list:
+            model_list.append(car.model)
+        if car.fuel not in fuel_list:
+            fuel_list.append(car.fuel)
+    return render_template('cars.html', cars=cars, conditions_list=conditions_list, make_list=make_list,
+                           model_list=model_list, fuel_list=fuel_list)
 
 
 @app.route('/car_details')
@@ -192,4 +206,16 @@ def dropdown_search():
     return jsonify(car_objects)
 
 
-
+@app.route('/lend_car', methods=['GET', 'POST'])
+@login_required
+def lend_car():
+    form = LendCarForm()
+    if form.validate_on_submit():
+        picture_file = save_car_picture(form.photo.data)
+        car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=form.daily_rate.data, photo=picture_file,
+                      fuel=form.fuel.data, seats=form.seats.data, description=form.description.data)
+        db.session.add(car)
+        db.session.commit()
+        flash('You have uploaded a car for hire', 'success')
+        return redirect(url_for('home'))
+    return render_template('lend_car.html', form=form)

@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, jsonify
+from flask import render_template, url_for, flash, redirect, request, jsonify, abort
 from car_dealer import app, bcrypt, db
 from car_dealer.forms import RegistrationForm, LoginForm, UpdateAccountForm, SellCarForm, LendCarForm
 from car_dealer.models import User, Car, LendCar
@@ -82,22 +82,30 @@ def save_picture(form_picture):
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            current_user.image_file = picture_file
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        db.session.commit()
-        flash('You have updated your info', 'success')
-        return redirect(url_for('account'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
+    if current_user.is_admin:
+        form = UpdateAccountForm()
+        if form.validate_on_submit():
+            if form.picture.data:
+                picture_file = save_picture(form.picture.data)
+                current_user.image_file = picture_file
+            current_user.username = form.username.data
+            current_user.email = form.email.data
+            db.session.commit()
+            flash('You have updated your info', 'success')
+            return redirect(url_for('account'))
+        elif request.method == 'GET':
+            form.username.data = current_user.username
+            form.email.data = current_user.email
+    else:
+        abort(404)
+
+    #Tables for Users and Cars
+
+    users = User.query.all()
+    cars = Car.query.all()
 
     image_file = url_for('static', filename='profile_pictures/' + current_user.image_file)
-    return render_template('account.html', form=form, title='Account Page', image_file=image_file)
+    return render_template('account.html', form=form, title='Account Page', image_file=image_file, users=users, cars=cars)
 
 
 def save_car_picture(form_picture):

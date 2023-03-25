@@ -1053,9 +1053,10 @@ https://templatemo.com/tm-516-known
   .list { font-size: 16px; line-height: 1.6; }
   .list li { margin-bottom: 15px;  }
 
-  #registerForm, #loginForm, #carUploadForm{
+  #registerForm, #loginForm, #carUploadForm, #AccountUpdateForm{
     width: 350px;
     font-size: 16px;
+    margin-top: 10px;
   }
   .col-md-12{
     margin-top: 0.7rem;

@@ -3,11 +3,11 @@
      <section>
           <div class="container">
                <div class="text-center">
-                    <h1>Car Listing</h1>
+                    <h1>Cars for Hire</h1>
 
                     <br>
 
-                    <p class="lead">We have quality and affordable cars for you. Pick your choice here.</p>
+                    <p class="lead">Get a comfortable car for an affordable daily rate.</p>
                </div>
           </div>
           <div class="container">
@@ -24,31 +24,21 @@
                     <div class="col-lg-3 col-xs-12">
                          <div class="form">
                               <form action="#" method="POST">
-                                   <div class="form-group">
-                                        <label>Used/New vehicle:</label>
-
-                                        <select class="form-control" id="carCondition">
-                                             <option value="">All</option>
-                                             {% for condition in conditions_list%}
-                                                  <option value="{{ condition }}">{{ condition }}</option>
-                                             {% endfor %}
-                                        </select>
-                                   </div>
 
                                    <div class="form-group">
-                                        <label>Make:</label>
-                                        
+                                        <label>Brand:</label>
+
                                         <select class="form-control" id="carMake">
                                              <option value="">-- All --</option>
-                                             {% for make in make_list %}
-                                                  <option value="{{ make }}">{{make}}</option>
+                                             {% for brand in brand_list %}
+                                                  <option value="{{ brand }}">{{brand}}</option>
                                              {% endfor %}
                                         </select>
                                    </div>
 
                                    <div class="form-group">
                                         <label>Model:</label>
-                                        
+
                                         <select class="form-control" id="carModel">
                                              <option value="">-- All --</option>
                                              {% for model in model_list %}
@@ -58,32 +48,8 @@
                                    </div>
 
                                    <div class="form-group">
-                                        <label>Price:</label>
-                                        
-                                        <select class="form-control">
-                                             <option value="">-- All --</option>
-                                             <option value="">option 1</option>
-                                             <option value="">option 2</option>
-                                             <option value="">option 3</option>
-                                             <option value="">option 4</option>
-                                        </select>
-                                   </div>
+                                        <label>Daily Rate:</label>
 
-                                   <div class="form-group">
-                                        <label>Mileage:</label>
-                                        
-                                        <select class="form-control">
-                                             <option value="">-- All --</option>
-                                             <option value="">option 1</option>
-                                             <option value="">option 2</option>
-                                             <option value="">option 3</option>
-                                             <option value="">option 4</option>
-                                        </select>
-                                   </div>
-
-                                   <div class="form-group">
-                                        <label>Engine size:</label>
-                                        
                                         <select class="form-control">
                                              <option value="">-- All --</option>
                                              <option value="">option 1</option>
@@ -95,7 +61,7 @@
 
                                    <div class="form-group">
                                         <label>Fuel:</label>
-                                        
+
                                         <select class="form-control" id="carFuel">
                                              <option value="">-- All --</option>
                                              {% for fuel in fuel_list %}
@@ -106,7 +72,7 @@
 
                                    <div class="form-group">
                                         <label>Number of seats:</label>
-                                        
+
                                         <select class="form-control">
                                              <option value="">-- All --</option>
                                              <option value="">option 1</option>
@@ -132,8 +98,8 @@
                                                             <img src="{{ url_for('static', filename='car_photos/' + car.photo) }}" class="img-responsive" alt="{{ car.make }}">
                                                        </div>
                                                        <div class="courses-date">
-                                                            <span title="Author"><i class="fa fa-dashboard"></i> {{ car.mileage }}</span>
-                                                            <span title="Author"><i class="fa fa-cube"></i> {{ car.engine_size}}cc</span>
+                                                            <span title="Author"><i class="fa fa-dashboard"></i> {{ car.brand }}</span>
+     <!--                                                       <span title="Author"><i class="fa fa-cube"></i> {{ car.engine_size}}cc</span>-->
                                                             <span title="Views"><i class="fa fa-cog"></i> Manual</span>
                                                        </div>
                                                   </div>
@@ -141,10 +107,9 @@
                                                   <div class="courses-detail">
                                                        <h3><a href="#">{{ car.description }}</a></h3>
 
-                                                       <p class="lead"><strong>${{ car.price }}</strong></p>
+                                                       <p class="lead"><strong>${{ car.daily_rate }}</strong></p>
 
-                                                       <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.fuel }} &nbsp;&nbsp;/&nbsp;&nbsp;
-                                                            {{ car.mfg_year }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.condition }}</p>
+                                                       <p>{{ car.fuel }} </p>
                                                   </div>
 
                                                   <div class="courses-info">
@@ -234,60 +199,6 @@
                                         </div>
                                    </div>
                               </div>
-
-<!--                              <div class="col-lg-6 col-md-4 col-sm-6">-->
-<!--                                   <div class="courses-thumb courses-thumb-secondary">-->
-<!--                                        <div class="courses-top">-->
-<!--                                             <div class="courses-image">-->
-<!--                                                  <img src="../static/images/product-5-720x480.jpg" class="img-responsive" alt="">-->
-<!--                                             </div>-->
-<!--                                             <div class="courses-date">-->
-<!--                                                  <span title="Author"><i class="fa fa-dashboard"></i> 130 000km</span>-->
-<!--                                                  <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>-->
-<!--                                                  <span title="Views"><i class="fa fa-cog"></i> Manual</span>-->
-<!--                                             </div>-->
-<!--                                        </div>-->
-
-<!--                                        <div class="courses-detail">-->
-<!--                                             <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>-->
-
-<!--                                             <p class="lead"><small><del> $11199.00</del></small> <strong>$11179.00</strong></p>-->
-
-<!--                                             <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; New vehicle</p>-->
-<!--                                        </div>-->
-
-<!--                                        <div class="courses-info">-->
-<!--                                             <a href="#" class="section-btn btn btn-primary btn-block">View More</a>-->
-<!--                                        </div>-->
-<!--                                   </div>-->
-<!--                              </div>-->
-
-<!--                              <div class="col-lg-6 col-md-4 col-sm-6">-->
-<!--                                   <div class="courses-thumb courses-thumb-secondary">-->
-<!--                                        <div class="courses-top">-->
-<!--                                             <div class="courses-image">-->
-<!--                                                  <img src="../static/images/product-6-720x480.jpg" class="img-responsive" alt="">-->
-<!--                                             </div>-->
-<!--                                             <div class="courses-date">-->
-<!--                                                  <span title="Author"><i class="fa fa-dashboard"></i> 130 000km</span>-->
-<!--                                                  <span title="Author"><i class="fa fa-cube"></i> 1800cc</span>-->
-<!--                                                  <span title="Views"><i class="fa fa-cog"></i> Manual</span>-->
-<!--                                             </div>-->
-<!--                                        </div>-->
-
-<!--                                        <div class="courses-detail">-->
-<!--                                             <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>-->
-
-<!--                                             <p class="lead"><small><del> $11199.00</del></small> <strong>$11179.00</strong></p>-->
-
-<!--                                             <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; Petrol &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; New vehicle</p>-->
-<!--                                        </div>-->
-
-<!--                                        <div class="courses-info">-->
-<!--                                             <a href="#" class="section-btn btn btn-primary btn-block">View More</a>-->
-<!--                                        </div>-->
-<!--                                   </div>-->
-<!--                              </div>-->
                          </div>
                     </div>
                </div>

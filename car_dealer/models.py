@@ -15,7 +15,9 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow())
     image_file = db.Column(db.String, nullable=False, default='default.jpg')
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
     reference = db.relationship('Car', backref='Owner', lazy=True)
+    user_reference = db.relationship('UserRoles', backref='Role', lazy=True)
 
     def __repr__(self):
         return f'User({self.username}, {self.email})'
@@ -34,6 +36,7 @@ class Car(db.Model):
     engine_size = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
     photo = db.Column(db.String, nullable=False)
+    is_approved = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -51,3 +54,10 @@ class LendCar(db.Model):
 
     def __repr__(self):
         return f'{self.model}, {self.daily_rate}'
+
+class UserRoles(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    is_admin = db.Column(db.Boolean, nullable=False)
+    is_manager = db.Column(db.Boolean, nullable=False)
+    is_user = db.Column(db.Boolean, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

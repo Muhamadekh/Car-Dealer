@@ -917,8 +917,8 @@ https://templatemo.com/tm-516-known
 
   @media only screen and (min-width: 768px) and (max-width: 991px) {
     .custom-navbar .nav li a {
-      padding-right: 10px;
-      padding-left: 10px;
+      padding-right: 5px;
+      padding-left: 5px;
     }
   }
 

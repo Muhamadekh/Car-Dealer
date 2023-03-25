@@ -29,10 +29,9 @@
           </div>
      </section>
 
-
      <!-- MENU -->
      <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
-          <div class="container">
+          <div class="container" style="margin-left: 10px; margin-right: 10px">
 
                <div class="navbar-header">
                     <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -42,7 +41,7 @@
                     </button>
 
                     <!-- lOGO TEXT HERE -->
-                    <a href="{{ url_for ('home') }}" class="navbar-brand">Hirbate Motors</a>
+                    <a class="navbar-brand" href="{{ url_for ('home') }}"> Hirbate Motors</a>
                </div>
 
                <!-- MENU LINKS -->
@@ -51,20 +50,25 @@
 						 <li><a href="{{url_for('buy_car')}}">Buy Car</a></li>
                          <li><a href="{{ url_for ('sell_car') }}">Sell Car</a></li>
                          <li><a href="{{ url_for ('lend_car') }}">Lend Car</a></li>
+                         <li><a href="{{ url_for ('hire_car') }}">Hire Car</a></li>
 	                     <li><a href="{{url_for ('about')}}">About Us</a></li>
                          <li><a href="{{ url_for ('contact_us') }}">Contact Us</a></li>
                          {% if current_user.is_authenticated %}
                               <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('logout') }}">Logout</a></li>
+                              {% if current_user.is_admin %}
+                                   <li><a class="ms-auto" href="{{ url_for ('account') }}">Account</a></li>
+                              {% endif %}
                          {% else %}
                               <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('register') }}">Register</a></li>
                               <li><a class="ms-auto" href="{{ url_for ('login') }}">Login</a></li>
                          {% endif %}
                     </ul>
                </div>
+          </div>
 
           </div>
      </section>
-     <div class="container" style="margin-top: 5rem; margin-bottom: 0.5rem; text-align: center;">
+     <div class="container" style="margin-top: 5rem; text-align: center;">
            {% with messages = get_flashed_messages ( with_categories=true ) %}
              {% if messages %}
                  {% for category, message in messages %}

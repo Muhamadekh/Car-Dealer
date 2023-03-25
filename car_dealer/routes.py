@@ -9,9 +9,13 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 
 @app.route('/')
-@app.route('/home')
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html', title='Home Page')
+    cars = Car.query.all()
+    for car in cars:
+        print(car.make)
+    return render_template('home.html', title='Home Page', cars=cars)
+
 
 @app.route('/about-us')
 def about():
@@ -29,6 +33,8 @@ def register():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
+        if user.email == 'root@gmail.com':
+            user.is_admin = True
         db.session.commit()
         flash(f'An account has been created for {form.username.data} suscessfully!', 'success')
         return redirect(url_for('login'))
@@ -44,7 +50,6 @@ def login():
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
             if user and bcrypt.check_password_hash(user.password, form.password.data):
-                print("User exist")
                 login_user(user, remember=form.remember.data)
                 flash("You have sucessfully logged in", "success")
                 next_page = request.args.get('next')
@@ -119,9 +124,14 @@ def sell_car():
                   user_id=current_user.id, condition=form.condition.data, fuel=form.fuel.data, seats=form.seats.data,
                   mfg_year=form.mfg_year.data,  engine_size=form.engine_size.data, description=form.description.data,
                   photo=picture_file)
+        if current_user.is_admin:
+            car.is_approved = True
         db.session.add(car)
         db.session.commit()
-        flash('Your successfully uploaded your car', 'success')
+        if current_user.is_admin:
+            flash('You have successfully uploaded your car for sell', 'success')
+        else:
+            flash('You have uploaded a car for sell. An admin will approve your request shortly.', 'success')
         return redirect(url_for('home'))
     return render_template('sell_car.html', title='Sell a car', form=form)
 
@@ -134,14 +144,15 @@ def buy_car():
     model_list = []
     fuel_list = []
     for car in cars:
-        if car.condition not in conditions_list:
-            conditions_list.append(car.condition)
-        if car.make not in make_list:
-            make_list.append(car.make)
-        if car.model not in model_list:
-            model_list.append(car.model)
-        if car.fuel not in fuel_list:
-            fuel_list.append(car.fuel)
+        if car.is_approved:
+            if car.condition not in conditions_list:
+                conditions_list.append(car.condition)
+            if car.make not in make_list:
+                make_list.append(car.make)
+            if car.model not in model_list:
+                model_list.append(car.model)
+            if car.fuel not in fuel_list:
+                fuel_list.append(car.fuel)
     return render_template('cars.html', cars=cars, conditions_list=conditions_list, make_list=make_list,
                            model_list=model_list, fuel_list=fuel_list)
 
@@ -214,8 +225,30 @@ def lend_car():
         picture_file = save_car_picture(form.photo.data)
         car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=form.daily_rate.data, photo=picture_file,
                       fuel=form.fuel.data, seats=form.seats.data, description=form.description.data)
+        if current_user.is_admin:
+            car.is_approved = True
         db.session.add(car)
         db.session.commit()
-        flash('You have uploaded a car for hire', 'success')
+        if current_user.is_admin:
+            flash('You have uploaded a car for hire', 'success')
+        else:
+            flash('You have uploaded a car for hire. An admin will approve your request shortly.', 'success')
         return redirect(url_for('home'))
     return render_template('lend_car.html', form=form)
+
+
+@app.route('/hire_car', methods=['GET', 'POST'])
+def hire_car():
+    cars = LendCar.query.all()
+    brand_list = []
+    model_list = []
+    fuel_list = []
+    for car in cars:
+        if car.is_approved:
+            if car.brand not in brand_list:
+                brand_list.append(car.brand)
+            if car.model not in model_list:
+                model_list.append(car.model)
+            if car.fuel not in fuel_list:
+                fuel_list.append(car.fuel)
+    return render_template('hire_car.html', cars=cars, brand_list=brand_list, model_list=model_list, fuel_list=fuel_list )

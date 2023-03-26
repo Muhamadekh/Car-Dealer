@@ -57,7 +57,7 @@
                          {% if current_user.is_authenticated %}
                               <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('logout') }}">Logout</a></li>
                               {% if current_user.is_admin %}
-                                   <li><a class="ms-auto" href="{{ url_for ('account') }}">Account</a></li>
+                                   <li><a class="ms-auto" href="{{ url_for ('admin') }}">Admin</a></li>
                               {% endif %}
                          {% else %}
                               <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('register') }}">Register</a></li>

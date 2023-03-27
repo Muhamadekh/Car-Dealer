@@ -65,20 +65,6 @@ def logout():
     return redirect(url_for('home'))
 
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pictures', picture_fn)
-
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
-
-
 @app.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
@@ -247,3 +233,26 @@ def hire_car():
             if car.fuel not in fuel_list:
                 fuel_list.append(car.fuel)
     return render_template('hire_car.html', cars=cars, brand_list=brand_list, model_list=model_list, fuel_list=fuel_list )
+
+
+@app.route('/admin/<int:car_id>', methods=['GET', 'POST'])
+def car_info(car_id):
+    car_for_sale = Car.query.get_or_404(car_id)
+    car_for_hire = LendCar.query.get_or_404(car_id)
+
+    return render_template('details_page.html', car_for_sale=car_for_sale, car_for_hire=car_for_hire)
+
+
+@app.route('/approve_car<int:car_id>', methods=['GET', 'POST'])
+def approve_car(car_id):
+    car_for_sale = Car.query.get_or_404(car_id)
+    car_for_hire = LendCar.query.get_or_404(car_id)
+    if car_for_sale:
+        car_for_sale.is_approved = True
+        db.session.add(car_for_sale)
+    else:
+        car_for_hire.is_approved = True
+        db.session.add(car_for_hire)
+    db.session.commit()
+    flash("You have confirmed this car", "success")
+    return redirect(url_for('admin'))

@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <div class="container" style="margin-top: 10rem; font-family: Helvetica, Arial, sans-serif">
-        <h1>Manage your users and different types of cars here.</h1>
+    <div class="container" style="margin-top: 2rem; font-family: Helvetica, Arial, sans-serif; text-align: center">
+        <h2>Manage your users and different types of cars here.</h2>
     </div>
     <!-- Users and Cars Tables -->
     <div class="row" id="AdminTables">
         <div class="col-md-12 mt-4 mb-4">
-            <div class="container">
-                <h2>Users List</h2>
+            <div class="container" style="text-align: center">
+                <h3>Users List</h3>
             </div>
             <table class="table table-dark">
               <thead>
@@ -36,8 +36,8 @@
             </table>
         </div>
         <div class="col-md-12 mt-4 mb-4">
-            <div class="container">
-                <h2>Cars for Sale List</h2>
+            <div class="container" style="text-align: center">
+                <h3>Cars for Sale List</h3>
             </div>
             <table class="table table-dark">
               <thead>
@@ -60,7 +60,7 @@
                       {% if car.is_approved %}
                             <td><button type="button" class="btn btn-success">Approved</button></td>
                       {% else %}
-                            <td><button type="button" class="btn btn-warning">Pending</button></td>
+                            <td><a href="{{ url_for('car_info', car_id=car.id)}}"><button type="button" class="btn btn-warning">Pending</button></a></td>
                       {% endif %}
                     </tr>
                 {% endfor %}
@@ -69,8 +69,8 @@
             </table>
         </div>
         <div class="col-md-12 mt-4 mb-4">
-            <div class="container">
-                <h2>Cars for Hire</h2>
+            <div class="container" style="text-align: center">
+                <h3>Cars for Hire</h3>
             </div>
             <table class="table table-dark">
               <thead>
@@ -78,7 +78,7 @@
                   <th scope="col">ID</th>
                   <th scope="col">Brand</th>
                   <th scope="col">Model</th>
-                  <th scope="col">Price</th>
+                  <th scope="col">Daily Rate</th>
                   <th scope="col">Status</th>
 
                 </tr>
@@ -89,11 +89,11 @@
                       <th scope="row">{{ car.id }}</th>
                       <td>{{ car.make }}</td>
                       <td>{{ car.model }}</td>
-                      <td>{{ car.price }}</td>
+                      <td>{{ car.daily_rate }}</td>
                       {% if car.is_approved %}
                             <td><button type="button" class="btn btn-success">Approved</button></td>
                       {% else %}
-                            <td><button type="button" class="btn btn-warning">Pending</button></td>
+                            <td><a href="{{ url_for('car_info', car_id=car.id)}}"><button type="button" class="btn btn-warning">Pending</button></a></td>
                       {% endif %}
                     </tr>
                 {% endfor %}

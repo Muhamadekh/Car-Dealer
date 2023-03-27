@@ -77,3 +77,5 @@ class LendCarForm(FlaskForm):
     seats = IntegerField('Number of Seats', validators=[DataRequired()])
     description = TextAreaField('Short description', validators=[DataRequired(), Length(min=10, max=140)])
     upload = SubmitField('Upload')
+
+

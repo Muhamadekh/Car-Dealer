@@ -235,12 +235,18 @@ def hire_car():
     return render_template('hire_car.html', cars=cars, brand_list=brand_list, model_list=model_list, fuel_list=fuel_list )
 
 
-@app.route('/admin/<int:car_id>', methods=['GET', 'POST'])
-def car_info(car_id):
-    car_for_sale = Car.query.get_or_404(car_id)
+@app.route('/admin/<int:car_id>/car_for_hire', methods=['GET', 'POST'])
+def car_hire_info(car_id):
     car_for_hire = LendCar.query.get_or_404(car_id)
 
-    return render_template('details_page.html', car_for_sale=car_for_sale, car_for_hire=car_for_hire)
+    return render_template('car_hire_details.html', car_for_hire=car_for_hire)
+
+
+@app.route('/admin/<int:car_id>/car_for_sale', methods=['GET', 'POST'])
+def car_sales_info(car_id):
+    car_for_sale = Car.query.get_or_404(car_id)
+
+    return render_template('car_sales_details.html', car_for_sale=car_for_sale)
 
 
 @app.route('/approve_car<int:car_id>', methods=['GET', 'POST'])
@@ -250,7 +256,7 @@ def approve_car(car_id):
     if car_for_sale:
         car_for_sale.is_approved = True
         db.session.add(car_for_sale)
-    else:
+    if car_for_hire:
         car_for_hire.is_approved = True
         db.session.add(car_for_hire)
     db.session.commit()

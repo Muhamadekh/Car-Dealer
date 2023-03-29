@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="row">
+        <div class="container">
+             <div class="col-lg-6 col-md-4 col-sm-6">
+                  <div class="courses-thumb courses-thumb-secondary">
+                       <div class="courses-top">
+                            <div class="courses-image">
+                                 <img src="{{ url_for('static', filename='car_photos/' + car_for_hire.photo) }}" class="img-responsive" alt={{ car_for_hire.brand }}>
+                            </div>
+                            <div class="courses-date">
+                                 <span title="Author"><i class="fa fa-dashboard"></i> {{ car_for_hire.brand }}</span>
+                                 <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                            </div>
+                       </div>
+
+                       <div class="courses-detail">
+                            <h3><a href="#">{{ car_for_hire.description }}</a></h3>
+
+                            <p class="lead"><strong>${{ car_for_hire.daily_rate }}</strong></p>
+
+                            <p>{{ car_for_hire.fuel }} </p>
+
+                       </div>
+
+                       <div class="courses-info">
+                            <a href="{{ url_for ('approve_car', car_id=car_for_hire.id) }}" class="section-btn btn btn-primary btn-block">Confirm</a>
+                       </div>
+                  </div>
+             </div>
+        </div>
+    </div>
+{% endblock content %}

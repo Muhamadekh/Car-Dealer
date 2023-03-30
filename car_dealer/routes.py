@@ -267,3 +267,20 @@ def approve_car_for_hire(car_id):
     db.session.commit()
     flash("You have confirmed this car", "success")
     return redirect(url_for('admin'))
+
+
+@app.route('/car_for_sale/<int:car_id>/delete_car', methods=['POST'])
+def delete_car_for_sale(car_id):
+    car = Car.query.get_or_404(car_id)
+    db.session.delete(car)
+    db.session.commit()
+    flash("You have deleted this car.", "success")
+    return redirect(url_for('admin'))
+
+@app.route('/car_for_hire/<int:car_id>/delete_car', methods=['POST'])
+def delete_car_for_hire(car_id):
+    car = LendCar.query.get_or_404(car_id)
+    db.session.delete(car)
+    db.session.commit()
+    flash("You have deleted this car.", "success")
+    return redirect(url_for('admin'))

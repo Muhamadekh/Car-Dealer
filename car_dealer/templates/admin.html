@@ -58,7 +58,7 @@
                       <td>{{ car.model }}</td>
                       <td>{{ car.price }}</td>
                       {% if car.is_approved %}
-                            <td><button type="button" class="btn btn-success">Approved</button></td>
+                            <td><a href="{{ url_for('car_sales_info', car_id=car.id)}}"><button type="button" class="btn btn-success">Approved</button></a></td>
                       {% else %}
                             <td><a href="{{ url_for('car_sales_info', car_id=car.id)}}"><button type="button" class="btn btn-warning">Pending</button></a></td>
                       {% endif %}
@@ -91,7 +91,7 @@
                       <td>{{ car.model }}</td>
                       <td>{{ car.daily_rate }}</td>
                       {% if car.is_approved %}
-                            <td><button type="button" class="btn btn-success">Approved</button></td>
+                            <td><a href="{{ url_for('car_hire_info', car_id=car.id)}}"><button type="button" class="btn btn-success">Approved</button></a></td>
                       {% else %}
                             <td><a href="{{ url_for('car_hire_info', car_id=car.id)}}"><button type="button" class="btn btn-warning">Pending</button></a></td>
                       {% endif %}

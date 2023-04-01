@@ -12,8 +12,6 @@ from flask_login import login_user, logout_user, login_required, current_user
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     cars = Car.query.all()
-    for car in cars:
-        print(car.make)
     return render_template('home.html', title='Home Page', cars=cars)
 
 
@@ -28,6 +26,8 @@ def contact_us():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -88,6 +88,7 @@ def save_car_picture(form_picture):
     picture_path = os.path.join(app.root_path, 'static/car_photos', picture_fn)
 
     output_size = (345, 230)
+
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -103,8 +104,7 @@ def sell_car():
         picture_file = save_car_picture(form.car_photos.data)
         car = Car(make=form.make.data, model=form.model.data, mileage=form.mileage.data, price=form.price.data,
                   user_id=current_user.id, condition=form.condition.data, fuel=form.fuel.data, seats=form.seats.data,
-                  mfg_year=form.mfg_year.data,  engine_size=form.engine_size.data, description=form.description.data,
-                  photo=picture_file)
+                  mfg_year=form.mfg_year.data,  engine_size=form.engine_size.data, description=form.description.data, photo=picture_file)
         if current_user.is_admin:
             car.is_approved = True
         db.session.add(car)
@@ -205,7 +205,7 @@ def lend_car():
     if form.validate_on_submit():
         picture_file = save_car_picture(form.photo.data)
         car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=form.daily_rate.data, photo=picture_file,
-                      fuel=form.fuel.data, seats=form.seats.data, description=form.description.data)
+                      fuel=form.fuel.data, seats=form.seats.data, description=form.description.data, user_id=current_user.id)
         if current_user.is_admin:
             car.is_approved = True
         db.session.add(car)

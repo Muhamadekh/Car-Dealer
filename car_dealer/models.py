@@ -15,7 +15,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow())
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
-    reference = db.relationship('Car', backref='Owner', lazy=True)
+    sale_reference = db.relationship('Car', backref='Owner', lazy=True)
+    hire_reference = db.relationship('LendCar', backref='Owner', lazy=True)
 
     def __repr__(self):
         return f'User({self.username}, {self.email})'
@@ -33,7 +34,7 @@ class Car(db.Model):
     mfg_year = db.Column(db.Integer, nullable=False)
     engine_size = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    photo = db.Column(db.String, nullable=False)
+    photo = db.Column(db.String(60), nullable=False)
     is_approved = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -50,6 +51,7 @@ class LendCar(db.Model):
     description = db.Column(db.Text, nullable=False)
     is_approved = db.Column(db.Boolean, nullable=False, default=False)
     photo = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f'{self.model}, {self.daily_rate}'

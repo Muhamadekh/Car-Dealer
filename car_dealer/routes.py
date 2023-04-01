@@ -102,9 +102,9 @@ def sell_car():
     form = SellCarForm()
     if form.validate_on_submit():
         picture_file = save_car_picture(form.car_photos.data)
-        car = Car(make=form.make.data, model=form.model.data, mileage=form.mileage.data, price=form.price.data,
+        car = Car(make=form.make.data, model=form.model.data, mileage=f'{form.mileage.data:,}', price=f'{form.price.data:,}',
                   user_id=current_user.id, condition=form.condition.data, fuel=form.fuel.data, seats=form.seats.data,
-                  mfg_year=form.mfg_year.data,  engine_size=form.engine_size.data, description=form.description.data, photo=picture_file)
+                  mfg_year=form.mfg_year.data,  engine_size=f'{form.engine_size.data:,}', description=form.description.data, photo=picture_file)
         if current_user.is_admin:
             car.is_approved = True
         db.session.add(car)
@@ -204,7 +204,7 @@ def lend_car():
     form = LendCarForm()
     if form.validate_on_submit():
         picture_file = save_car_picture(form.photo.data)
-        car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=form.daily_rate.data, photo=picture_file,
+        car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=f'{form.daily_rate.data:,}', photo=picture_file,
                       fuel=form.fuel.data, seats=form.seats.data, description=form.description.data, user_id=current_user.id)
         if current_user.is_admin:
             car.is_approved = True

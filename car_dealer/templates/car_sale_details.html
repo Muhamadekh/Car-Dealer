@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}
 {% block content %}
      <section>
-          <div class="container">
+          <div class="container" style="margin-top: 10px">
                <div class="row">
                     <div class="col-md-6 col-xs-12">
                          <div>
-                              <img src="../static/images/product-1-720x480.jpg" alt="" class="img-responsive wc-image">
+                              <img src="{{ url_for('static', filename='car_photos/' + car_for_sale.photo) }}" alt="" class="img-responsive wc-image">
                          </div>
 
                          <br>
@@ -39,11 +39,11 @@
 
                     <div class="col-md-6 col-xs-12">
                          <form action="#" method="post" class="form">
-                              <h2>Lorem ipsum dolor sit amet</h2>
+                              <h2>Extended details for this car</h2>
 
-                              <p class="lead">ABS, Leather seats, Power Assisted Steering, Electric heated seats, New HU and AU, Xenon headlights</p>
+                              <p class="lead">{{ car_for_sale.description }}</p>
                               
-                              <p class="lead"><small><del> $11999.00</del></small> <strong class="text-primary">$11779.00</strong></p>
+                              <p class="lead"><strong class="text-primary">{{ car_for_sale.price }}</strong></p>
 
                               <div class="row">
                                    <div class="col-md-4 col-sm-6">
@@ -52,7 +52,7 @@
 
                                              <br>
 
-                                             <strong>Used vehicle</strong>
+                                             <strong>{{ car_for_sale.condition }} Vehicle</strong>
                                         </p>
                                    </div>
 
@@ -62,7 +62,7 @@
 
                                              <br>
 
-                                             <strong>Lorem ipsum dolor sit</strong>
+                                             <strong>{{ car_for_sale.make }}</strong>
                                         </p>
                                    </div>
 
@@ -72,7 +72,7 @@
 
                                              <br>
 
-                                             <strong>Lorem ipsum dolor sit</strong>
+                                             <strong>{{ car_for_sale.model }}</strong>
                                         </p>
                                    </div>
 
@@ -92,7 +92,7 @@
 
                                              <br>
 
-                                             <strong>5000 km</strong>
+                                             <strong>{{ car_for_sale.mileage }} km</strong>
                                         </p>
                                    </div>
 
@@ -102,7 +102,7 @@
 
                                              <br>
 
-                                             <strong>Diesel</strong>
+                                             <strong>{{ car_for_sale.fuel }}</strong>
                                         </p>
                                    </div>
 
@@ -112,7 +112,7 @@
 
                                              <br>
 
-                                             <strong>1800 cc</strong>
+                                             <strong>{{ car_for_sale.engine_size }} cc</strong>
                                         </p>
                                    </div>
 
@@ -143,7 +143,7 @@
 
                                              <br>
 
-                                             <strong>4</strong>
+                                             <strong>{{ car_for_sale.seats }}</strong>
                                         </p>
                                    </div>
 
@@ -171,108 +171,53 @@
                     </div>
                </div>
 
-               <div class="row">
-                    <div class="col-lg-8 col-xs-12">
-                         <div class="panel panel-default">
-                              <div class="panel-heading">
-                                   <h4>Vehicle Description</h4>
-                              </div>
+               <div class="row mt-4">
+                    <div class="col-md-12">
+                         <div class="container text-center">
+                              <div class="panel panel-default">
+                                   <div class="panel-heading">
+                                        <h4>Contact Details</h4>
+                                   </div>
 
-                              <div class="panel-body">
-                                   <p>- Colour coded bumpers<br>- Tinted glass<br>- Immobiliser<br>- Central locking - remote<br>- Passenger airbag<br>- Electric windows<br>- Rear head rests<br>- Radio<br>- CD player<br>- Ideal first car<br>- Warranty<br>- High level brake light<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                              </div>
-                         </div>
-                    </div>
+                                   <div class="panel-body">
+                                        <p>
+                                             <span>Name</span>
 
-                    <div class="col-lg-4 col-xs-12">
-                         <div class="panel panel-default">
-                              <div class="panel-heading">
-                                   <h4>Contact Details</h4>
-                              </div>
+                                             <br>
 
-                              <div class="panel-body">
-                                   <p>
-                                        <span>Name</span>
+                                             <strong>{{user.username}}</strong>
+                                        </p>
 
-                                        <br>
+                                        <p>
+                                             <span>Phone</span>
 
-                                        <strong>John Smith</strong>
-                                   </p>
+                                             <br>
 
-                                   <p>
-                                        <span>Phone</span>
-
-                                        <br>
-
-                                        <strong><a href="tel:123-456-789">123-456-789</a></strong>
-                                   </p>
+                                             <strong><a href="tel:123-456-789">123-456-789</a></strong>
+                                        </p>
 
 
-                                   <p>
-                                        <span>Mobile phone</span>
+                                        <p>
+                                             <span>Mobile phone</span>
 
-                                        <br>
+                                             <br>
 
-                                        <strong><a href="tel:456789123">456789123</a></strong>
-                                   </p>
+                                             <strong><a href="tel:456789123">456789123</a></strong>
+                                        </p>
 
-                                   <p>
-                                        <span>Email</span>
+                                        <p>
+                                             <span>Email</span>
 
-                                        <br>
+                                             <br>
 
-                                        <strong><a href="mailto:john@carsales.com">john@carsales.com</a></strong>
-                                   </p>
+                                             <strong>{{ user.email }}</a></strong>
+                                        </p>
+                                   </div>
                               </div>
                          </div>
                     </div>
                </div>
           </div>
      </section>
-     <!-- FOOTER -->
-     <footer id="footer">
-          <div class="container">
-               <div class="row">
 
-                    <div class="col-md-4 col-sm-6">
-                         <div class="footer-info">
-                              <div class="section-title">
-                                   <h2>Headquarter</h2>
-                              </div>
-                              <address>
-                                   <p>212 Barrington Court <br>New York, ABC 10001</p>
-                              </address>
-
-                              <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                   <li><a href="#" class="fa fa-twitter"></a></li>
-                                   <li><a href="#" class="fa fa-instagram"></a></li>
-                              </ul>
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <div class="footer-info">
-                              <div class="section-title">
-                                   <h2>Contact Info</h2>
-                              </div>
-                              <address>
-                                   <p>+1 333 4040 5566</p>
-                                   <p><a href="mailto:contact@company.com">contact@company.com</a></p>
-                              </address>
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-12">
-                         <div class="footer-info newsletter-form">
-                              <div class="copyright-text">
-                                   <p>Copyright &copy; 2020 Company Name</p>
-                                   <p>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
-                              </div>
-                         </div>
-                    </div>
-
-               </div>
-          </div>
-     </footer>
 {% endblock content %}

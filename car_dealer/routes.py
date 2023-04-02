@@ -138,9 +138,11 @@ def buy_car():
                            model_list=model_list, fuel_list=fuel_list)
 
 
-@app.route('/car_details')
-def car_details():
-    return render_template('car-details.html', title='About Page')
+@app.route('/car_details<int:car_id>/car_for_sale')
+def car_for_sale_details(car_id):
+    user = User.query.filter_by(is_admin=True).first()
+    car_for_sale = Car.query.get_or_404(car_id)
+    return render_template('car_sale_details.html', title='About Page', car_for_sale=car_for_sale, user=user)
 
 
 @app.route('/livesearch', methods=['GET', 'POST'])
@@ -239,14 +241,14 @@ def hire_car():
 def car_hire_info(car_id):
     car_for_hire = LendCar.query.get_or_404(car_id)
 
-    return render_template('car_hire_details.html', car_for_hire=car_for_hire)
+    return render_template('car_hire_info.html', car_for_hire=car_for_hire)
 
 
 @app.route('/<int:car_id>/car_for_sale', methods=['GET', 'POST'])
 def car_sales_info(car_id):
     car_for_sale = Car.query.get_or_404(car_id)
 
-    return render_template('car_sales_details.html', car_for_sale=car_for_sale)
+    return render_template('car_sales_info.html', car_for_sale=car_for_sale)
 
 
 @app.route('/approve_car<int:car_id>/car_for_sale', methods=['GET', 'POST'])

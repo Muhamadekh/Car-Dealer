@@ -21,15 +21,15 @@ def about():
     return render_template('about-us.html', title='About Page')
 
 @app.route('/contact_us', methods=['POST', 'GET'])
+@login_required
 def contact_us():
     if request.method == 'POST':
         print(request.form)
         email = request.form.get('email')
-        name = request.form.get('name')
         phone = request.form.get('phone')
         msg = f"""
             A message from: {email}
-            name: {name}
+            email: {email}
             phone: {phone}
             message:
             {request.form.get('message')} """
@@ -42,7 +42,7 @@ def contact_us():
         flash("Your message has been received! We will get back to you soon. if you need a prompt response please\
                         contact us on +254 721 775 127", "success")
 
-        return redirect(f"{url_for('home')}#contact")
+        return redirect(url_for('home'))
 
     return render_template('contact.html', title='About Page')
 

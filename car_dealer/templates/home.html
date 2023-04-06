@@ -76,7 +76,7 @@
                                              </div>
 
                                              <div class="courses-info">
-                                                  <a href="car_sale_details.html" class="section-btn btn btn-primary btn-block">View More</a>
+                                                  <a href="{{ url_for('car_for_sale_details', car_id=car.id) }}" class="section-btn btn btn-primary btn-block">View More</a>
                                              </div>
                                         </div>
                                    </div>
@@ -101,12 +101,6 @@
                               <address>
                                    <p>212 Barrington Court <br>New York, ABC 10001</p>
                               </address>
-
-                              <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                   <li><a href="#" class="fa fa-twitter"></a></li>
-                                   <li><a href="#" class="fa fa-instagram"></a></li>
-                              </ul>
                          </div>
                     </div>
 
@@ -125,8 +119,7 @@
                     <div class="col-md-4 col-sm-12">
                          <div class="footer-info newsletter-form">
                               <div class="copyright-text">
-                                   <p>Copyright &copy; 2020 Company Name</p>
-                                   <p>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                                   <p>Copyright &copy; 2020 Hirbate Motors</p>
                               </div>
                          </div>
                     </div>

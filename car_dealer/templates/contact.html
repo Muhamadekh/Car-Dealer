@@ -7,7 +7,7 @@
 
                     <br>
 
-                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, alias.</p>
+                    <p class="lead">Contact Hirbate Motors for any question you may have.</p>
                </div>
           </div>
      </section>
@@ -19,13 +19,14 @@
                <div class="row">
 
                     <div class="col-md-6 col-sm-12">
-                         <form id="contact-form" role="form" action="" method="post">
+                         <form id="contact-form" role="form" action="" method="POST" onsubmit="sendEmail()">
                               <div class="col-md-12 col-sm-12">
-                                   <input type="text" class="form-control" placeholder="Enter full name" name="name" required>
-                    
-                                   <input type="email" class="form-control" placeholder="Enter email address" name="email" required>
 
-                                   <textarea class="form-control" rows="6" placeholder="Tell us about your message" name="message" required></textarea>
+                                   <input type="email" class="form-control" placeholder="Enter email address" name="email" id="email" required>
+
+                                   <input type="tel" class="form-control" placeholder="Phone number" name="phone" id="phone" required>
+
+                                   <textarea class="form-control" rows="6" placeholder="Write your message here" name="message" id="message" required></textarea>
                               </div>
 
                               <div class="col-md-4 col-sm-12">
@@ -59,12 +60,6 @@
                               <address>
                                    <p>212 Barrington Court <br>New York, ABC 10001</p>
                               </address>
-
-                              <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                   <li><a href="#" class="fa fa-twitter"></a></li>
-                                   <li><a href="#" class="fa fa-instagram"></a></li>
-                              </ul>
                          </div>
                     </div>
 
@@ -83,12 +78,11 @@
                     <div class="col-md-4 col-sm-12">
                          <div class="footer-info newsletter-form">
                               <div class="copyright-text">
-                                   <p>Copyright &copy; 2020 Company Name</p>
-                                   <p>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                                   <p>Copyright &copy; 2020 Hirbate Motors</p>
                               </div>
                          </div>
                     </div>
-                    
+
                </div>
           </div>
      </footer>

@@ -209,3 +209,19 @@ $("#carFuel").on("input",(e)=> {
 dropDownSelection()
 })
 
+
+const sendEmail = () => {
+    console.log("Am called")
+    let email = document.getElementById("email").value
+    let phone = document.getElementById("phone").value
+    let message = document.getElementById("message").value
+    getData(`http://127.0.0.1:5000/contact_us`, "POST", {
+        "email": email,
+        "phone": phone,
+        "message": message
+
+    }, (data) => {
+        console.log(data)
+    })
+
+}

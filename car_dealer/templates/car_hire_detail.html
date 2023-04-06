@@ -1,0 +1,184 @@
+{% extends 'layout.html' %}
+{% block content %}
+     <section>
+          <div class="container" style="margin-top: 10px">
+               <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                         <div>
+                              <img src="{{ url_for('static', filename='car_photos/' + car_for_hire.photo) }}" alt="" class="img-responsive wc-image">
+                         </div>
+
+                         <br>
+
+                         <div class="row">
+                              <div class="col-sm-4 col-xs-6">
+                                   <div>
+                                        <img src="../static/images/product-1-720x480.jpg" alt="" class="img-responsive">
+                                   </div>
+
+                                   <br>
+                              </div>
+
+                              <div class="col-sm-4 col-xs-6">
+                                   <div>
+                                        <img src="../static/images/product-2-720x480.jpg" alt="" class="img-responsive">
+                                   </div>
+
+                                   <br>
+                              </div>
+
+                              <div class="col-sm-4 col-xs-6">
+                                   <div>
+                                        <img src="../static/images/product-3-720x480.jpg" alt="" class="img-responsive">
+                                   </div>
+
+                                   <br>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                         <form action="#" method="post" class="form">
+                              <h2>Extended details for this car</h2>
+
+                              <p class="lead">{{ car_for_hire.description }}</p>
+
+                              <p class="lead"><strong class="text-primary">{{ car_for_hire.daily_rate }}</strong></p>
+
+                              <div class="row">
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>Brand</span>
+
+                                             <br>
+
+                                             <strong>{{ car_for_hire.brand }}</strong>
+                                        </p>
+                                   </div>
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span> Model</span>
+
+                                             <br>
+
+                                             <strong>{{ car_for_hire.model }}</strong>
+                                        </p>
+                                   </div>
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>First registration</span>
+
+                                             <br>
+
+                                             <strong>05/2010</strong>
+                                        </p>
+                                   </div>
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>Fuel</span>
+
+                                             <br>
+
+                                             <strong>{{ car_for_hire.fuel }}</strong>
+                                        </p>
+                                   </div>
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>Number of Seats</span>
+
+                                             <br>
+
+                                             <strong>{{ car_for_hire.seats }}</strong>
+                                        </p>
+                                   </div>
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>Power</span>
+
+                                             <br>
+
+                                             <strong>85 hp</strong>
+                                        </p>
+                                   </div>
+
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>Gearbox</span>
+
+                                             <br>
+
+                                             <strong>Manual</strong>
+                                        </p>
+                                   </div>
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>Doors</span>
+
+                                             <br>
+
+                                             <strong>2/3</strong>
+                                        </p>
+                                   </div>
+
+                                   <div class="col-md-4 col-sm-6">
+                                        <p>
+                                             <span>Color</span>
+
+                                             <br>
+
+                                             <strong>Black</strong>
+                                        </p>
+                                   </div>
+                              </div>
+                         </form>
+                    </div>
+               </div>
+
+               <div class="row mt-4">
+                    <div class="col-md-12">
+                         <div class="container text-center">
+                              <div class="panel panel-default">
+                                   <div class="panel-heading">
+                                        <h4>Contact Details</h4>
+                                   </div>
+
+                                   <div class="panel-body">
+                                        <p>
+                                             <span>Name</span>
+
+                                             <br>
+
+                                             <strong>{{user.username}}</strong>
+                                        </p>
+
+                                        <p>
+                                             <span>Mobile phone</span>
+
+                                             <br>
+
+                                             <strong><a href="tel:456789123">0721775127</a></strong>
+                                        </p>
+
+                                        <p>
+                                             <span>Email</span>
+
+                                             <br>
+
+                                             <strong>{{ user.email }}</a></strong>
+                                        </p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+{% endblock content %}

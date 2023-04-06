@@ -2,10 +2,11 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify, abort
-from car_dealer import app, bcrypt, db
+from car_dealer import app, bcrypt, db, mail
 from car_dealer.forms import RegistrationForm, LoginForm, UpdateAccountForm, SellCarForm, LendCarForm
 from car_dealer.models import User, Car, LendCar
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_mail import Message
 
 
 @app.route('/')
@@ -19,8 +20,30 @@ def home():
 def about():
     return render_template('about-us.html', title='About Page')
 
-@app.route('/contact_us')
+@app.route('/contact_us', methods=['POST', 'GET'])
 def contact_us():
+    if request.method == 'POST':
+        print(request.form)
+        email = request.form.get('email')
+        name = request.form.get('name')
+        phone = request.form.get('phone')
+        msg = f"""
+            A message from: {email}
+            name: {name}
+            phone: {phone}
+            message:
+            {request.form.get('message')} """
+        message = Message('A message from Hirbate Motors', sender='lolan.noqueue@gmail.com',
+                          recipients=['muhamadekhhaji99@gmail.com'])
+
+        message.body = msg
+
+        mail.send(message)
+        flash("Your message has been received! We will get back to you soon. if you need a prompt response please\
+                        contact us on +254 721 775 127", "success")
+
+        return redirect(f"{url_for('home')}#contact")
+
     return render_template('contact.html', title='About Page')
 
 
@@ -143,6 +166,13 @@ def car_for_sale_details(car_id):
     user = User.query.filter_by(is_admin=True).first()
     car_for_sale = Car.query.get_or_404(car_id)
     return render_template('car_sale_details.html', title='About Page', car_for_sale=car_for_sale, user=user)
+
+
+@app.route('/<int:car_id>/car_for_hire')
+def car_for_hire_details(car_id):
+    user = User.query.filter_by(is_admin=True).first()
+    car_for_hire = LendCar.query.get_or_404(car_id)
+    return render_template('car_hire_detail.html', title='About Page', car_for_hire=car_for_hire, user=user)
 
 
 @app.route('/livesearch', methods=['GET', 'POST'])
@@ -286,3 +316,4 @@ def delete_car_for_hire(car_id):
     db.session.commit()
     flash("You have deleted this car.", "success")
     return redirect(url_for('admin'))
+

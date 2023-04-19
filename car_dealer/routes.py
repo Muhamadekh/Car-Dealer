@@ -12,6 +12,12 @@ from flask_mail import Message
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    car_sale = Car.query.filter_by(is_approved=False).first()
+    car_hire = LendCar.query.filter_by(is_approved=False).first()
+    if car_sale:
+        flash("A user has uploaded a car for sale. Please check your admin page for more details.", "success")
+    if car_hire:
+        flash("A user has uploaded a car for hire. Please check your admin page for more details.", "success")
     cars = Car.query.all()
     return render_template('home.html', title='Home Page', cars=cars)
 

@@ -14,12 +14,12 @@ from flask_mail import Message
 def home():
     car_sale = Car.query.filter_by(is_approved=False).first()
     car_hire = LendCar.query.filter_by(is_approved=False).first()
-    if car_sale:
-        flash("A user has uploaded a car for sale. Please check your admin page for more details.", "success")
-    if car_hire:
-        flash("A user has uploaded a car for hire. Please check your admin page for more details.", "success")
+    # if car_sale:
+    #     flash("A user has uploaded a car for sale. Please check your admin page for more details.", "success")
+    # if car_hire:
+    #     flash("A user has uploaded a car for hire. Please check your admin page for more details.", "success")
     cars = Car.query.all()
-    return render_template('home.html', title='Home Page', cars=cars)
+    return render_template('home.html', title='Home Page', cars=cars, car_sale=car_sale, car_hire=car_hire)
 
 
 @app.route('/about-us')
@@ -167,14 +167,14 @@ def buy_car():
                            model_list=model_list, fuel_list=fuel_list)
 
 
-@app.route('/car_details<int:car_id>/car_for_sale')
+@app.route('/car_details<int:car_id>/full_carSale_details')
 def car_for_sale_details(car_id):
     user = User.query.filter_by(is_admin=True).first()
     car_for_sale = Car.query.get_or_404(car_id)
     return render_template('car_sale_details.html', title='About Page', car_for_sale=car_for_sale, user=user)
 
 
-@app.route('/<int:car_id>/car_for_hire')
+@app.route('/<int:car_id>/full_carHire_details')
 def car_for_hire_details(car_id):
     user = User.query.filter_by(is_admin=True).first()
     car_for_hire = LendCar.query.get_or_404(car_id)

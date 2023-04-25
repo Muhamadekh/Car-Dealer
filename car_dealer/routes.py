@@ -80,9 +80,12 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if user and bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
-                flash("You have sucessfully logged in", "success")
+                flash("You have logged in sucessfully", "success")
                 next_page = request.args.get('next')
-                return redirect(next_page) if next_page else redirect(url_for('home'))
+                if user.is_admin:
+                    return redirect(next_page) if next_page else redirect(url_for('admin'))
+                else:
+                    return redirect(next_page) if next_page else redirect(url_for('home'))
             else:
                 flash("Please check your email or password", "warning")
         return render_template('login.html', form=form, title='Log in')

@@ -1,6 +1,7 @@
-from car_dealer import db, login_manager
-from _datetime import datetime
-from flask_login import UserMixin
+from car_dealer import db, login_manager, app
+import jwt
+from datetime import datetime, timedelta
+from flask_login import UserMixin, current_user
 
 
 @login_manager.user_loader
@@ -17,6 +18,19 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     sale_reference = db.relationship('Car', backref='Owner', lazy=True)
     hire_reference = db.relationship('LendCar', backref='Owner', lazy=True)
+
+    def encode_auth_token(self):
+        """
+        Generates the Auth Token
+        :return: string
+        """
+
+        try:
+            token = jwt.encode({"user_id": self.id}, app.config['SECRET_KEY'], algorithm="HS256")
+            decoded_token = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            return token, decoded_token
+        except Exception as e:
+            return e
 
     def __repr__(self):
         return f'User({self.username}, {self.email})'

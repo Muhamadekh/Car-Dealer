@@ -3,7 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify, abort
 from car_dealer import app, bcrypt, db, mail
-from car_dealer.forms import RegistrationForm, LoginForm, UpdateAccountForm, SellCarForm, LendCarForm
+from car_dealer.forms import (RegistrationForm, LoginForm, UpdateAccountForm, SellCarForm, LendCarForm,
+                              RequestResetForm, ResetPasswordForm)
 from car_dealer.models import User, Car, LendCar
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_mail import Message
@@ -12,6 +13,8 @@ from flask_mail import Message
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    user = current_user
+    print(User.encode_auth_token(user))
     car_sale = Car.query.filter_by(is_approved=False).first()
     car_hire = LendCar.query.filter_by(is_approved=False).first()
     # if car_sale:
@@ -325,4 +328,11 @@ def delete_car_for_hire(car_id):
     db.session.commit()
     flash("You have deleted this car.", "success")
     return redirect(url_for('admin'))
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    return render_template('reset_request.html',title='Reset Password', form=form)
 

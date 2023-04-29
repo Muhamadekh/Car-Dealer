@@ -43,7 +43,7 @@
 
                               <p class="lead">{{ car_for_sale.description }}</p>
                               
-                              <p class="lead"><strong class="text-primary">{{ car_for_sale.price }}</strong></p>
+                              <p class="lead"><strong class="text-primary">Price: Ksh {{ car_for_sale.price }}</strong></p>
 
                               <div class="row">
                                    <div class="col-md-4 col-sm-6">
@@ -78,21 +78,11 @@
 
                                    <div class="col-md-4 col-sm-6">
                                         <p>
-                                             <span>First registration</span>
-
-                                             <br>
-
-                                             <strong>05/2010</strong>
-                                        </p>
-                                   </div>
-
-                                   <div class="col-md-4 col-sm-6">
-                                        <p>
                                              <span>Mileage</span>
 
                                              <br>
 
-                                             <strong>{{ car_for_sale.mileage }} km</strong>
+                                             <strong>{{ car_for_sale.mileage }}</strong>
                                         </p>
                                    </div>
 
@@ -118,22 +108,11 @@
 
                                    <div class="col-md-4 col-sm-6">
                                         <p>
-                                             <span>Power</span>
-
-                                             <br>
-
-                                             <strong>85 hp</strong>
-                                        </p>
-                                   </div>
-
-
-                                   <div class="col-md-4 col-sm-6">
-                                        <p>
                                              <span>Gearbox</span>
 
                                              <br>
 
-                                             <strong>Manual</strong>
+                                             <strong>{{ car_for_sale.gearbox }}</strong>
                                         </p>
                                    </div>
 
@@ -146,24 +125,13 @@
                                              <strong>{{ car_for_sale.seats }}</strong>
                                         </p>
                                    </div>
-
-                                   <div class="col-md-4 col-sm-6">
-                                        <p>
-                                             <span>Doors</span>
-
-                                             <br>
-
-                                             <strong>2/3</strong>
-                                        </p>
-                                   </div>
-
                                    <div class="col-md-4 col-sm-6">
                                         <p>
                                              <span>Color</span>
 
                                              <br>
 
-                                             <strong>Black</strong>
+                                             <strong>{{ car_for_sale.color }}</strong>
                                         </p>
                                    </div>
                               </div>

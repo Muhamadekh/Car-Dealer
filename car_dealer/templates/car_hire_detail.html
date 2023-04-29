@@ -43,7 +43,7 @@
 
                               <p class="lead">{{ car_for_hire.description }}</p>
 
-                              <p class="lead"><strong class="text-primary">{{ car_for_hire.daily_rate }}</strong></p>
+                              <p class="lead"><strong class="text-primary">Daily Rate: Ksh {{ car_for_hire.daily_rate }}</strong></p>
 
                               <div class="row">
                                    <div class="col-md-4 col-sm-6">
@@ -65,17 +65,6 @@
                                              <strong>{{ car_for_hire.model }}</strong>
                                         </p>
                                    </div>
-
-                                   <div class="col-md-4 col-sm-6">
-                                        <p>
-                                             <span>First registration</span>
-
-                                             <br>
-
-                                             <strong>05/2010</strong>
-                                        </p>
-                                   </div>
-
                                    <div class="col-md-4 col-sm-6">
                                         <p>
                                              <span>Fuel</span>
@@ -98,32 +87,11 @@
 
                                    <div class="col-md-4 col-sm-6">
                                         <p>
-                                             <span>Power</span>
-
-                                             <br>
-
-                                             <strong>85 hp</strong>
-                                        </p>
-                                   </div>
-
-
-                                   <div class="col-md-4 col-sm-6">
-                                        <p>
                                              <span>Gearbox</span>
 
                                              <br>
 
-                                             <strong>Manual</strong>
-                                        </p>
-                                   </div>
-
-                                   <div class="col-md-4 col-sm-6">
-                                        <p>
-                                             <span>Doors</span>
-
-                                             <br>
-
-                                             <strong>2/3</strong>
+                                             <strong>{{ car_for_hire.gearbox }}</strong>
                                         </p>
                                    </div>
 
@@ -133,7 +101,7 @@
 
                                              <br>
 
-                                             <strong>Black</strong>
+                                             <strong>{{ car_for_hire.color }}</strong>
                                         </p>
                                    </div>
                               </div>

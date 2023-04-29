@@ -10,14 +10,14 @@
                             </div>
                             <div class="courses-date">
                                  <span title="Author"><i class="fa fa-dashboard"></i> {{ car_for_hire.brand }}</span>
-                                 <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                                 <span title="Views"><i class="fa fa-cog"></i> {{ car_for_hire.gearbox }}</span>
                             </div>
                        </div>
 
                        <div class="courses-detail">
                             <h3><a href="#">{{ car_for_hire.description }}</a></h3>
 
-                            <p class="lead"><strong>${{ car_for_hire.daily_rate }}</strong></p>
+                            <p class="lead"><strong>Ksh {{ car_for_hire.daily_rate }}</strong></p>
 
                             <p>{{ car_for_hire.fuel }} </p>
 

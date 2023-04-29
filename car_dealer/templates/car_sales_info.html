@@ -11,16 +11,16 @@
                           <div class="courses-date">
                                <span title="Author"><i class="fa fa-dashboard"></i> {{ car_for_sale.mileage }}</span>
                                <span title="Author"><i class="fa fa-cube"></i> {{ car_for_sale.engine_size}}cc</span>
-                               <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                               <span title="Views"><i class="fa fa-cog"></i> {{ car_for_sale.gearbox}}</span>
                           </div>
                      </div>
 
                      <div class="courses-detail">
                           <h3><a href="#">{{ car_for_sale.description }}</a></h3>
                           <h4><a href="#">{{ car_for_sale.owner }}</a></h4>
-                          <p class="lead"><strong>${{ car_for_sale.price }}</strong></p>
+                          <p class="lead"><strong>Ksh {{ car_for_sale.price }}</strong></p>
 
-                          <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; {{ car_for_sale.fuel }} &nbsp;&nbsp;/&nbsp;&nbsp;
+                          <p>{{ car_for_sale.fuel }} &nbsp;&nbsp;/&nbsp;&nbsp;
                                {{ car_for_sale.mfg_year }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car_for_sale.condition }}</p>
                      </div>
 

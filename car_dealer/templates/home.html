@@ -1,14 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
      <!-- HOME -->
-     <!-- Notification -->
-     {% if current_user.is_authenticated and current_user.is_admin %}
-          {% if car_sale or car_hire %}
-               <script>
-                    alert("There is a car uploaded. Please check your admin page")
-               </script>
-          {% endif %}
-     {% endif %}
      <section id="home">
           <div class="row">
                <div class="owl-carousel owl-theme home-slider">

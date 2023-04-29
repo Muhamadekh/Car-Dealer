@@ -38,6 +38,36 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
+                            {{ form.gearbox.label (class="form-control-label")}}
+                                {% if form.gearbox.errors %}
+                                    {{ form.gearbox (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.gearbox.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.gearbox (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.color.label (class="form-control-label")}}
+                                {% if form.color.errors %}
+                                    {{ form.color (class="form-control form-control-lg is-invalid")}}
+                                    <ul class="invalid-feedback">
+                                        {% for error in form.color.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {{ form.color (class="form-control form-control-lg")}}
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
                             {{ form.daily_rate.label (class="form-control-label")}}
                                 {% if form.daily_rate.errors %}
                                     {{ form.daily_rate (class="form-control form-control-lg is-invalid")}}

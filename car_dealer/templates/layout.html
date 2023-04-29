@@ -49,17 +49,22 @@
                     <!-- MENU LINKS -->
                     <div class="collapse navbar-collapse">
                          <ul class="nav navbar-nav navbar-nav-first">
-                              <li><a href="{{url_for('buy_car')}}">Buy Car</a></li>
-                              <li><a href="{{ url_for ('sell_car') }}">Sell Car</a></li>
-                              <li><a href="{{ url_for ('lend_car') }}">Lend Car</a></li>
-                              <li><a href="{{ url_for ('hire_car') }}">Hire Car</a></li>
-                              <li><a href="{{url_for ('about')}}">About Us</a></li>
-                              <li><a href="{{ url_for ('contact_us') }}">Contact Us</a></li>
+                              {% if current_user.is_authenticated and current_user.is_admin %}
+                                   <li><a href="{{url_for('buy_car')}}">Buy Car</a></li>
+                                   <li><a href="{{ url_for ('sell_car') }}">Sell Car</a></li>
+                                   <li><a href="{{ url_for ('lend_car') }}">Lend Car</a></li>
+                                   <li><a href="{{ url_for ('hire_car') }}">Hire Car</a></li>
+                                   <li><a class="ms-auto" href="{{ url_for ('admin') }}">Admin</a></li>
+                              {% else %}
+                                   <li><a href="{{url_for('buy_car')}}">Buy Car</a></li>
+                                   <li><a href="{{ url_for ('sell_car') }}">Sell Car</a></li>
+                                   <li><a href="{{ url_for ('lend_car') }}">Lend Car</a></li>
+                                   <li><a href="{{ url_for ('hire_car') }}">Hire Car</a></li>
+                                   <li><a href="{{url_for ('about')}}">About Us</a></li>
+                                   <li><a href="{{ url_for ('contact_us') }}">Contact Us</a></li>
+                              {% endif %}
                               {% if current_user.is_authenticated %}
                                    <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('logout') }}">Logout</a></li>
-                                   {% if current_user.is_admin %}
-                                        <li><a class="ms-auto" href="{{ url_for ('admin') }}">Admin</a></li>
-                                   {% endif %}
                               {% else %}
                                    <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('register') }}">Register</a></li>
                                    <li><a class="ms-auto" href="{{ url_for ('login') }}">Login</a></li>

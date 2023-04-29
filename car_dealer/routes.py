@@ -15,10 +15,6 @@ from flask_mail import Message
 def home():
     car_sale = Car.query.filter_by(is_approved=False).first()
     car_hire = LendCar.query.filter_by(is_approved=False).first()
-    # if car_sale:
-    #     flash("A user has uploaded a car for sale. Please check your admin page for more details.", "success")
-    # if car_hire:
-    #     flash("A user has uploaded a car for hire. Please check your admin page for more details.", "success")
     cars = Car.query.all()
     return render_template('home.html', title='Home Page', cars=cars, car_sale=car_sale, car_hire=car_hire)
 
@@ -137,7 +133,8 @@ def sell_car():
         picture_file = save_car_picture(form.car_photos.data)
         car = Car(make=form.make.data, model=form.model.data, mileage=f'{form.mileage.data:,}', price=f'{form.price.data:,}',
                   user_id=current_user.id, condition=form.condition.data, fuel=form.fuel.data, seats=form.seats.data,
-                  mfg_year=form.mfg_year.data,  engine_size=f'{form.engine_size.data:,}', description=form.description.data, photo=picture_file)
+                  mfg_year=form.mfg_year.data,  engine_size=f'{form.engine_size.data:,}', description=form.description.data,
+                  gearbox=form.gearbox.data, color=form.color.data, photo=picture_file)
         if current_user.is_admin:
             car.is_approved = True
         db.session.add(car)
@@ -247,7 +244,8 @@ def lend_car():
     if form.validate_on_submit():
         picture_file = save_car_picture(form.photo.data)
         car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=f'{form.daily_rate.data:,}', photo=picture_file,
-                      fuel=form.fuel.data, seats=form.seats.data, description=form.description.data, user_id=current_user.id)
+                      fuel=form.fuel.data, seats=form.seats.data, description=form.description.data, color=form.color.data,
+                      user_id=current_user.id, gearbox=form.gearbox.data)
         if current_user.is_admin:
             car.is_approved = True
         db.session.add(car)
@@ -330,7 +328,6 @@ def delete_car_for_hire(car_id):
 
 def send_reset_email(user):
     token = User.get_reset_token(user)
-    print(token)
     msg = Message('Password Reset Request', sender='muhamadekhhaji99@gmail.com', recipients=[user.email])
 
     msg.body = f""" To reset your password, visit the following link.

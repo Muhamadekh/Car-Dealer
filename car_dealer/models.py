@@ -44,6 +44,8 @@ class User(db.Model, UserMixin):
 class Car(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     condition = db.Column(db.String, nullable=False)
+    gearbox = db.Column(db.String, nullable=False)
+    color = db.Column(db.String, nullable=False)
     make = db.Column(db.String(50), nullable=False)
     mileage = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
@@ -65,6 +67,8 @@ class LendCar(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     brand = db.Column(db.String(40), nullable=False)
     model = db.Column(db.String(40), nullable=False)
+    gearbox = db.Column(db.String, nullable=False)
+    color = db.Column(db.String, nullable=False)
     daily_rate = db.Column(db.Integer, nullable=False)
     fuel = db.Column(db.String, nullable=False)
     seats = db.Column(db.Integer, nullable=False)

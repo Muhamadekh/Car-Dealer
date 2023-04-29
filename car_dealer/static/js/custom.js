@@ -114,16 +114,16 @@ $("#searchBox").on("input",(e)=>{
                           <div class="courses-date">
                                <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage}</span>
                                <span title="Author"><i class="fa fa-cube"></i> ${data[i].engine_size}cc</span>
-                               <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                               <span title="Views"><i class="fa fa-cog"></i> ${data[i].gearbox}</span>
                           </div>
                      </div>
 
                      <div class="courses-detail">
-                          <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+                          <h3><a href="#">${data[i].description}</a></h3>
 
-                          <p class="lead"><strong>$${data[i].price}</strong></p>
+                          <p class="lead"><strong>Ksh ${data[i].price}</strong></p>
 
-                          <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
+                          <p>${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].mfg_year} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
                      </div>
 
                      <div class="courses-info">
@@ -141,10 +141,14 @@ function dropDownSelection(){
   let car_make = $("#carMake").val()
   let car_model = $("#carModel").val()
   let car_fuel = $("#carFuel").val()
-  console.log(car_condition, car_make, car_model, car_fuel)
+  let car_seats = $("#carSeats").val()
+  console.log(car_condition, car_make, car_model, car_fuel, car_seats)
   var obj = {}
   if (car_condition != ''){
     Object.assign(obj,{"condition":car_condition})
+  }
+  if (car_seats != ''){
+    Object.assign(obj,{"seats":car_seats})
   }
   if (car_make != ''){
     Object.assign(obj,{"make":car_make})
@@ -173,16 +177,16 @@ function dropDownSelection(){
                           <div class="courses-date">
                                <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage}</span>
                                <span title="Author"><i class="fa fa-cube"></i> ${data[i].engine_size}cc</span>
-                               <span title="Views"><i class="fa fa-cog"></i> Manual</span>
+                               <span title="Views"><i class="fa fa-cog"></i> ${data[i].gearbox}</span>
                           </div>
                      </div>
 
                      <div class="courses-detail">
                           <h3><a href="#">${data[i].description}</a></h3>
 
-                          <p class="lead"><strong>$${data[i].price}</strong></p>
+                          <p class="lead"><strong>Ksh ${data[i].price}</strong></p>
 
-                          <p>190 hp &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; 2008 &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
+                          <p>${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].mfg_year} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
                      </div>
 
                      <div class="courses-info">
@@ -195,6 +199,10 @@ function dropDownSelection(){
     cars_div.html(cars_selected)
 })}
 $("#carCondition").on("input",(e)=> {
+dropDownSelection()
+})
+
+$("#carSeats").on("input",(e)=> {
 dropDownSelection()
 })
 

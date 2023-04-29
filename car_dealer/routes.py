@@ -154,6 +154,7 @@ def buy_car():
     make_list = []
     model_list = []
     fuel_list = []
+    seats_list = []
     for car in cars:
         if car.is_approved:
             if car.condition not in conditions_list:
@@ -164,8 +165,10 @@ def buy_car():
                 model_list.append(car.model)
             if car.fuel not in fuel_list:
                 fuel_list.append(car.fuel)
+            if car.seats not in seats_list:
+                seats_list.append(car.seats)
     return render_template('cars.html', cars=cars, conditions_list=conditions_list, make_list=make_list,
-                           model_list=model_list, fuel_list=fuel_list)
+                           model_list=model_list, fuel_list=fuel_list, seats_list=seats_list)
 
 
 @app.route('/car_details<int:car_id>/full_carSale_details')
@@ -185,7 +188,7 @@ def car_for_hire_details(car_id):
 @app.route('/livesearch', methods=['GET', 'POST'])
 def livesearch():
     search = request.json["text"]
-    print(search)
+    # print(search)
     results = Car.query.filter(Car.make.like(f"{search}%")).all()
     car_objects = []
     for result in results:
@@ -199,7 +202,11 @@ def livesearch():
             "model": result.model,
             "engine_size": result.engine_size,
             "condition": result.condition,
-            "fuel": result.fuel
+            "fuel": result.fuel,
+            "description": result.description,
+            "seats": result.seats,
+            "gearbox": result.gearbox,
+            "mfg_year": result.mfg_year
 
         }
         car_objects.append(car)
@@ -210,7 +217,7 @@ def livesearch():
 @app.route('/dropdown_search', methods=['GET', 'POST'])
 def dropdown_search():
     selected_term = request.json
-    print(selected_term)
+    # print(selected_term)
 
     results = Car.query.filter_by(**selected_term).all()
     print(results)
@@ -228,7 +235,10 @@ def dropdown_search():
             "engine_size": result.engine_size,
             "condition": result.condition,
             "fuel": result.fuel,
-            "description": result.description
+            "description": result.description,
+            "seats": result.seats,
+            "gearbox": result.gearbox,
+            "mfg_year": result.mfg_year
 
         }
 
@@ -264,6 +274,7 @@ def hire_car():
     brand_list = []
     model_list = []
     fuel_list = []
+    seats_list = []
     for car in cars:
         if car.is_approved:
             if car.brand not in brand_list:
@@ -272,7 +283,10 @@ def hire_car():
                 model_list.append(car.model)
             if car.fuel not in fuel_list:
                 fuel_list.append(car.fuel)
-    return render_template('hire_car.html', cars=cars, brand_list=brand_list, model_list=model_list, fuel_list=fuel_list )
+            if car.seats not in seats_list:
+                seats_list.append(car.seats)
+    return render_template('hire_car.html', cars=cars, brand_list=brand_list, model_list=model_list,
+                           seats_list=seats_list, fuel_list=fuel_list)
 
 
 @app.route('/<int:car_id>/car_for_hire', methods=['GET', 'POST'])

@@ -73,12 +73,11 @@
                                    <div class="form-group">
                                         <label>Number of seats:</label>
 
-                                        <select class="form-control">
+                                        <select class="form-control" id="carSeats">
                                              <option value="">-- All --</option>
-                                             <option value="">option 1</option>
-                                             <option value="">option 2</option>
-                                             <option value="">option 3</option>
-                                             <option value="">option 4</option>
+                                             {% for seat in seats_list %}
+                                                  <option value="{{fuel }}">{{ seat }}</option>
+                                             {% endfor %}
                                         </select>
                                    </div>
 

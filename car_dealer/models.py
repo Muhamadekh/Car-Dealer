@@ -19,18 +19,23 @@ class User(db.Model, UserMixin):
     sale_reference = db.relationship('Car', backref='Owner', lazy=True)
     hire_reference = db.relationship('LendCar', backref='Owner', lazy=True)
 
-    def encode_auth_token(self):
+    def get_reset_token(self):
         """
         Generates the Auth Token
-        :return: string
+        """
+        return jwt.encode({"user_id": self.id}, app.config['SECRET_KEY'], algorithm="HS256")
+
+    @staticmethod
+    def verify_reset_token(token):
         """
 
+        Return user id from the payload as user id
+        """
         try:
-            token = jwt.encode({"user_id": self.id}, app.config['SECRET_KEY'], algorithm="HS256")
-            decoded_token = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
-            return token, decoded_token
-        except Exception as e:
-            return e
+            user_id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])['user_id']
+        except:
+            return None
+        return User.query.get(user_id)
 
     def __repr__(self):
         return f'User({self.username}, {self.email})'
@@ -54,6 +59,7 @@ class Car(db.Model):
 
     def __repr__(self):
         return f'{self.make}, {self.mileage}, {self.price})'
+
 
 class LendCar(db.Model):
     id = db.Column(db.Integer, primary_key=True)

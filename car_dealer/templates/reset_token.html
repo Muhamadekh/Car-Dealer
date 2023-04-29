@@ -4,23 +4,8 @@
         <form action="" method="POST">
             {{ form.hidden_tag() }}
             <fieldset class="form-group" style="margin-top: 1rem;">
-                <legend class="border-bottom mb-4 mt-4">Login</legend>
+                <legend class="border-bottom mb-4 mt-4">Reset Password</legend>
                 <div class="row" id="loginForm">
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            {{ form.email.label (class="form-control-label")}}
-                            {% if form.email.errors %}
-                                {{ form.email (class="form-control form-control-lg is-invalid")}}
-                                <ul class="invalid-feedback">
-                                    {% for error in form.email.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                {{ form.email (class="form-control form-control-lg")}}
-                            {% endif %}
-                        </div>
-                    </div>
                     <div class="form-group">
                         <div class="col-md-12">
                             {{ form.password.label (class="form-control-label")}}
@@ -36,15 +21,28 @@
                             {% endif %}
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form.confirm_password.label (class="form-control-label")}}
+                            {% if form.confirm_password.errors %}
+                                {{ form.confirm_password (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.confirm_password.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.confirm_password (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
                     <div>
                         <div class="col-md-12">
                             {{ form.submit (class="btn btn-outline-info", style="background-color: #008CBA; color: white;")}}
                         </div>
-                        <div class="col-md-12"> <a href="{{ url_for('reset_request') }}">Forgot Password?</a></div>
                     </div>
                 </div>
             </fieldset>
         </form>
-        <small> Need an account? <a href="{{ url_for ('register') }}" class="link">Sign Up Here</a></small>
     </div>
 {% endblock %}

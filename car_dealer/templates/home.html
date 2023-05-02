@@ -58,7 +58,7 @@
                                         <div class="courses-thumb courses-thumb-secondary">
                                              <div class="courses-top">
                                                   <div class="courses-image">
-                                                       <img src="{{ url_for('static', filename='car_photos/' + car.photo) }}" class="img-responsive" alt="">
+                                                       <img src="{{ url_for('static', filename='car_photos/' + cars_photos[car.id]) }}" class="img-responsive" alt="">
                                                   </div>
                                                   <div class="courses-date">
                                                        <span title="Author"><i class="fa fa-dashboard"></i> {{ car.mileage }}</span>

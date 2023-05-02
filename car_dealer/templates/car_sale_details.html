@@ -5,35 +5,22 @@
                <div class="row">
                     <div class="col-md-6 col-xs-12">
                          <div>
-                              <img src="{{ url_for('static', filename='car_photos/' + car_for_sale.photo) }}" alt="" class="img-responsive wc-image">
+                              <img src="{{ url_for('static', filename='car_photos/' + main_photos.photos) }}" alt="" class="img-responsive wc-image">
                          </div>
 
                          <br>
 
                          <div class="row">
+                              {% for photo in extra_photos %}
                               <div class="col-sm-4 col-xs-6">
                                    <div>
-                                        <img src="../static/images/product-1-720x480.jpg" alt="" class="img-responsive">
-                                   </div>
-                                   
-                                   <br>
-                              </div>
-
-                              <div class="col-sm-4 col-xs-6">
-                                   <div>
-                                        <img src="../static/images/product-2-720x480.jpg" alt="" class="img-responsive">
-                                   </div>
-                                   
-                                   <br>
-                              </div>
-
-                              <div class="col-sm-4 col-xs-6">
-                                   <div>
-                                        <img src="../static/images/product-3-720x480.jpg" alt="" class="img-responsive">
+                                        <img src="{{ url_for('static', filename='car_photos/' + photo.photos) }}" alt="" class="img-responsive">
                                    </div>
 
                                    <br>
                               </div>
+
+                              {% endfor %}
                          </div>
                     </div>
 

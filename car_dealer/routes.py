@@ -4,8 +4,8 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify, abort
 from car_dealer import app, bcrypt, db, mail
 from car_dealer.forms import (RegistrationForm, LoginForm, UpdateAccountForm, SellCarForm, LendCarForm,
-                              RequestResetForm, ResetPasswordForm)
-from car_dealer.models import User, Car, LendCar
+                              RequestResetForm, ResetPasswordForm, SellCarPhotosForm, LendCarPhotosForm)
+from car_dealer.models import User, Car, LendCar, SellPhotos, HirePhotos
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_mail import Message
 
@@ -16,12 +16,23 @@ def home():
     car_sale = Car.query.filter_by(is_approved=False).first()
     car_hire = LendCar.query.filter_by(is_approved=False).first()
     cars = Car.query.all()
-    return render_template('home.html', title='Home Page', cars=cars, car_sale=car_sale, car_hire=car_hire)
+    cars_photos = {}
+
+    for car in cars:
+        car_photo = SellPhotos.query.filter_by(car_id=car.id).first()
+        if not car_photo:
+            photo = 'default.jpeg'
+        else:
+            photo = car_photo.photos
+        cars_photos[car.id] = photo
+
+    return render_template('home.html', title='Home Page', cars=cars, car_sale=car_sale, car_hire=car_hire, cars_photos=cars_photos)
 
 
 @app.route('/about-us')
 def about():
     return render_template('about-us.html', title='About Page')
+
 
 @app.route('/contact_us', methods=['POST', 'GET'])
 @login_required
@@ -130,26 +141,49 @@ def save_car_picture(form_picture):
 def sell_car():
     form = SellCarForm()
     if form.validate_on_submit():
-        picture_file = save_car_picture(form.car_photos.data)
         car = Car(make=form.make.data, model=form.model.data, mileage=f'{form.mileage.data:,}', price=f'{form.price.data:,}',
                   user_id=current_user.id, condition=form.condition.data, fuel=form.fuel.data, seats=form.seats.data,
                   mfg_year=form.mfg_year.data,  engine_size=f'{form.engine_size.data:,}', description=form.description.data,
-                  gearbox=form.gearbox.data, color=form.color.data, photo=picture_file)
+                  gearbox=form.gearbox.data, color=form.color.data)
         if current_user.is_admin:
             car.is_approved = True
         db.session.add(car)
         db.session.commit()
+        return redirect(url_for('car_for_sale_photos', car_id=car.id))
+    return render_template('sell_car.html', title='Sell a car', form=form)
+
+
+@app.route('/car_for_sale_photos/<int:car_id>', methods=['GET', 'POST'])
+def car_for_sale_photos(car_id):
+    form = SellCarPhotosForm()
+    if form.validate_on_submit():
+        for file in form.car_photos.data:
+            picture_file = save_car_picture(file)
+            photo = SellPhotos(photos=picture_file, car_id=car_id)
+            db.session.add(photo)
+            db.session.commit()
         if current_user.is_admin:
             flash('You have successfully uploaded your car for sell', 'success')
         else:
             flash('You have uploaded a car for sell. An admin will approve your request shortly.', 'success')
         return redirect(url_for('home'))
-    return render_template('sell_car.html', title='Sell a car', form=form)
+    return render_template('sell_photos.html', title='Upload Car Photos', form=form)
 
 
 @app.route('/buy_car', methods=['GET', 'POST'])
 def buy_car():
     cars = Car.query.all()
+
+    cars_photos = {}
+
+    for car in cars:
+        car_photo = SellPhotos.query.filter_by(car_id=car.id).first()
+        if not car_photo:
+            photo = 'default.jpeg'
+        else:
+            photo = car_photo.photos
+        cars_photos[car.id] = photo
+
     conditions_list = []
     make_list = []
     model_list = []
@@ -168,14 +202,26 @@ def buy_car():
             if car.seats not in seats_list:
                 seats_list.append(car.seats)
     return render_template('cars.html', cars=cars, conditions_list=conditions_list, make_list=make_list,
-                           model_list=model_list, fuel_list=fuel_list, seats_list=seats_list)
+                           model_list=model_list, fuel_list=fuel_list, seats_list=seats_list, cars_photos=cars_photos)
 
 
 @app.route('/car_details<int:car_id>/full_carSale_details')
 def car_for_sale_details(car_id):
     user = User.query.filter_by(is_admin=True).first()
     car_for_sale = Car.query.get_or_404(car_id)
-    return render_template('car_sale_details.html', title='About Page', car_for_sale=car_for_sale, user=user)
+
+    main_photos = []
+    extra_photos = []
+
+    car_photo = SellPhotos.query.filter_by(car_id=car_for_sale.id).all()
+    if not car_photo:
+        photo = 'default.jpeg'
+    else:
+        main_photos = car_photo[0]
+        extra_photos = car_photo[1:]
+
+    return render_template('car_sale_details.html', title='Car Details', car_for_sale=car_for_sale,
+                           user=user, main_photos=main_photos, extra_photos=extra_photos)
 
 
 @app.route('/<int:car_id>/full_carHire_details')
@@ -214,16 +260,28 @@ def livesearch():
     return jsonify(car_objects)
 
 
+def check_term(selected_term):
+    for key in selected_term.keys():
+        if key == "price":
+            value_list = [int(value) for value in selected_term['price'].split(',')]
+            for price in range(value_list[0], value_list[1]):
+                formated_price = f'{price:,}'
+                selected_term['price'] = formated_price
+                results = Car.query.filter_by(**selected_term).all()
+        else:
+            results = Car.query.filter_by(**selected_term).all()
+    return results
+
+
 @app.route('/dropdown_search', methods=['GET', 'POST'])
 def dropdown_search():
     selected_term = request.json
-    # print(selected_term)
 
-    results = Car.query.filter_by(**selected_term).all()
-    print(results)
+    output = check_term(selected_term)
+
     car_objects = []
 
-    for result in results:
+    for result in output:
         car = {
             "id": result.id,
             "make": result.make,
@@ -241,7 +299,6 @@ def dropdown_search():
             "mfg_year": result.mfg_year
 
         }
-
         car_objects.append(car)
 
     return jsonify(car_objects)
@@ -252,20 +309,31 @@ def dropdown_search():
 def lend_car():
     form = LendCarForm()
     if form.validate_on_submit():
-        picture_file = save_car_picture(form.photo.data)
-        car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=f'{form.daily_rate.data:,}', photo=picture_file,
-                      fuel=form.fuel.data, seats=form.seats.data, description=form.description.data, color=form.color.data,
+        car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=f'{form.daily_rate.data:,}', fuel=form.fuel.data,
+                      seats=form.seats.data, description=form.description.data, color=form.color.data,
                       user_id=current_user.id, gearbox=form.gearbox.data)
         if current_user.is_admin:
             car.is_approved = True
         db.session.add(car)
+        db.session.commit()
+        return redirect(url_for('car_for_hire_photos'))
+    return render_template('lend_car.html', form=form)
+
+
+@app.route('/car_for_hire_photos', methods=['GET', 'POST'])
+def car_for_hire_photos():
+    form = LendCarPhotosForm()
+    if form.validate_on_submit():
+        picture_file = save_car_picture(form.car_photos.data)
+        photo = SellPhotos(photos=picture_file)
+        db.session.add(photo)
         db.session.commit()
         if current_user.is_admin:
             flash('You have uploaded a car for hire', 'success')
         else:
             flash('You have uploaded a car for hire. An admin will approve your request shortly.', 'success')
         return redirect(url_for('home'))
-    return render_template('lend_car.html', form=form)
+    return render_template('hire_photos.html', title='Upload Car Photos', form=form)
 
 
 @app.route('/hire_car', methods=['GET', 'POST'])
@@ -299,8 +367,13 @@ def car_hire_info(car_id):
 @app.route('/<int:car_id>/car_for_sale', methods=['GET', 'POST'])
 def car_sales_info(car_id):
     car_for_sale = Car.query.get_or_404(car_id)
+    car_photo = SellPhotos.query.filter_by(car_id=car_id).first()
+    if not car_photo:
+        photo = 'default.jpeg'
+    else:
+        photo = car_photo.photos
 
-    return render_template('car_sales_info.html', car_for_sale=car_for_sale)
+    return render_template('car_sales_info.html', car_for_sale=car_for_sale, photo=photo)
 
 
 @app.route('/approve_car<int:car_id>/car_for_sale', methods=['GET', 'POST'])

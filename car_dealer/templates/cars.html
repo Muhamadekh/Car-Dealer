@@ -60,12 +60,13 @@
                                    <div class="form-group">
                                         <label>Price:</label>
                                         
-                                        <select class="form-control">
+                                        <select class="form-control" id="carPrice">
                                              <option value="">-- All --</option>
-                                             <option value="">option 1</option>
-                                             <option value="">option 2</option>
-                                             <option value="">option 3</option>
-                                             <option value="">option 4</option>
+                                             <option value=" 0,1000000">Under 1M</option>
+                                             <option value="1000000,1500000">1M - 1.5M</option>
+                                             <option value="1745000,2500000">1.5M - 2.5M</option>
+                                             <option value="2500000,3500000">2.5M - 3.5M</option>
+                                             <option value="3500000">Above 3.5M</option>
                                         </select>
                                    </div>
 
@@ -128,7 +129,7 @@
                                              <div class="courses-thumb courses-thumb-secondary">
                                                   <div class="courses-top">
                                                        <div class="courses-image">
-                                                            <img src="{{ url_for('static', filename='car_photos/' + car.photo) }}" class="img-responsive" alt="{{ car.make }}">
+                                                            <img src="{{ url_for('static', filename='car_photos/' + cars_photos[car.id]) }}" class="img-responsive" alt="{{ car.make }}">
                                                        </div>
                                                        <div class="courses-date">
                                                             <span title="Author"><i class="fa fa-dashboard"></i> {{ car.mileage }}</span>

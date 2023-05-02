@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, IntegerField, SelectField, \
-    TextAreaField
+    TextAreaField, MultipleFileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from car_dealer.models import User
 from flask_login import current_user
@@ -55,6 +55,8 @@ condition_drop_list = ['New', 'Used']
 fuel_drop_list = ['Petrol', 'Diesel']
 fuel_drop_list = ['Petrol', 'Diesel']
 gearbox_drop_list = ['Manual', 'Automatic']
+
+
 class SellCarForm(FlaskForm):
     condition = SelectField('Car Condition', choices=condition_drop_list, default=1)
     make = StringField('Car Brand, e.g, Toyota, Nissan, etc.', validators=[DataRequired(), Length(min=5, max=20)])
@@ -68,20 +70,29 @@ class SellCarForm(FlaskForm):
     mfg_year = IntegerField('Manufacture Year', validators=[DataRequired()])
     engine_size = IntegerField('Engine Size in CC', validators=[DataRequired()])
     description = TextAreaField('Short description', validators=[DataRequired(), Length(min=10, max=140)])
-    car_photos = FileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
+    submit = SubmitField('Next')
+
+
+class SellCarPhotosForm(FlaskForm):
+    car_photos = MultipleFileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
     submit = SubmitField('Upload')
+
 
 class LendCarForm(FlaskForm):
     brand = StringField('Car Brand', validators=[DataRequired(), Length(min=5, max=20)])
     model = StringField('Car Model', validators=[DataRequired(), Length(min=5, max=20)])
     daily_rate = IntegerField('Daily Rate', validators=[DataRequired()])
-    photo = FileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
     fuel = SelectField('Fuel Type', choices=fuel_drop_list)
     color = StringField('Colour', validators=[DataRequired(), Length(max=10)])
     gearbox = SelectField('Gearbox', choices=gearbox_drop_list, default=1)
     seats = IntegerField('Number of Seats', validators=[DataRequired()])
     description = TextAreaField('Short description', validators=[DataRequired(), Length(min=10, max=140)])
-    upload = SubmitField('Upload')
+    upload = SubmitField('Next')
+
+
+class LendCarPhotosForm(FlaskForm):
+    car_photos = MultipleFileField('Upload Car Photos', validators=[FileAllowed(['jpg', 'png', 'jfif'])])
+    submit = SubmitField('Upload')
 
 
 class RequestResetForm(FlaskForm):

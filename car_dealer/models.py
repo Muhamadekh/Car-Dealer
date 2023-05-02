@@ -28,7 +28,6 @@ class User(db.Model, UserMixin):
     @staticmethod
     def verify_reset_token(token):
         """
-
         Return user id from the payload as user id
         """
         try:
@@ -55,15 +54,16 @@ class Car(db.Model):
     mfg_year = db.Column(db.Integer, nullable=False)
     engine_size = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    photo = db.Column(db.String(60), nullable=False)
     is_approved = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    photo_reference = db.relationship('SellPhotos', backref='Car', lazy=True)
 
     def __repr__(self):
         return f'{self.make}, {self.mileage}, {self.price})'
 
 
 class LendCar(db.Model):
+    __tablename__ = 'lendcar'
     id = db.Column(db.Integer, primary_key=True)
     brand = db.Column(db.String(40), nullable=False)
     model = db.Column(db.String(40), nullable=False)
@@ -74,8 +74,20 @@ class LendCar(db.Model):
     seats = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
     is_approved = db.Column(db.Boolean, nullable=False, default=False)
-    photo = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    photo_reference = db.relationship('HirePhotos', backref='Car', lazy=True)
 
     def __repr__(self):
         return f'{self.model}, {self.daily_rate}'
+
+
+class SellPhotos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    photos = db.Column(db.String(60), nullable=False)
+    car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=False)
+
+
+class HirePhotos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    photos = db.Column(db.String(60), nullable=False)
+    car_id = db.Column(db.Integer, db.ForeignKey('lendcar.id'), nullable=False)

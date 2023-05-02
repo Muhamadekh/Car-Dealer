@@ -142,13 +142,17 @@ function dropDownSelection(){
   let car_model = $("#carModel").val()
   let car_fuel = $("#carFuel").val()
   let car_seats = $("#carSeats").val()
-  console.log(car_condition, car_make, car_model, car_fuel, car_seats)
+  let car_price = $("#carPrice").val()
+  console.log(car_condition, car_make, car_model, car_fuel, car_seats, car_price)
   var obj = {}
   if (car_condition != ''){
     Object.assign(obj,{"condition":car_condition})
   }
   if (car_seats != ''){
     Object.assign(obj,{"seats":car_seats})
+  }
+   if (car_price != ''){
+    Object.assign(obj,{"price":car_price})
   }
   if (car_make != ''){
     Object.assign(obj,{"make":car_make})
@@ -214,6 +218,10 @@ dropDownSelection()
 })
 
 $("#carFuel").on("input",(e)=> {
+dropDownSelection()
+})
+
+$("#carPrice").on("input",(e)=> {
 dropDownSelection()
 })
 

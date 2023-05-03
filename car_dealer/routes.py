@@ -26,7 +26,8 @@ def home():
             photo = car_photo.photos
         cars_photos[car.id] = photo
 
-    return render_template('home.html', title='Home Page', cars=cars, car_sale=car_sale, car_hire=car_hire, cars_photos=cars_photos)
+    return render_template('home.html', title='Home Page', cars=cars, car_sale=car_sale, car_hire=car_hire,
+                           cars_photos=cars_photos)
 
 
 @app.route('/about-us')
@@ -127,11 +128,7 @@ def save_car_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/car_photos', picture_fn)
 
-    output_size = (345, 230)
-
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
+    form_picture.save(picture_path)
 
     return picture_fn
 
@@ -175,7 +172,6 @@ def buy_car():
     cars = Car.query.all()
 
     cars_photos = {}
-
     for car in cars:
         car_photo = SellPhotos.query.filter_by(car_id=car.id).first()
         if not car_photo:
@@ -228,7 +224,18 @@ def car_for_sale_details(car_id):
 def car_for_hire_details(car_id):
     user = User.query.filter_by(is_admin=True).first()
     car_for_hire = LendCar.query.get_or_404(car_id)
-    return render_template('car_hire_detail.html', title='About Page', car_for_hire=car_for_hire, user=user)
+
+    main_photos = []
+    extra_photos = []
+
+    car_photo = SellPhotos.query.filter_by(car_id=car_for_hire.id).all()
+    if not car_photo:
+        photo = 'default.jpeg'
+    else:
+        main_photos = car_photo[0]
+        extra_photos = car_photo[1:]
+    return render_template('car_hire_detail.html', title='About Page', car_for_hire=car_for_hire, user=user,
+                           main_photos=main_photos, extra_photos=extra_photos)
 
 
 @app.route('/livesearch', methods=['GET', 'POST'])
@@ -238,12 +245,21 @@ def livesearch():
     results = Car.query.filter(Car.make.like(f"{search}%")).all()
     car_objects = []
     for result in results:
+        cars_photos = {}
+
+        car_photo = SellPhotos.query.filter_by(car_id=result.id).first()
+        if not car_photo:
+            photo = 'default.jpeg'
+        else:
+            photo = car_photo.photos
+        cars_photos[result.id] = photo
+
         car = {
             "id": result.id,
             "make": result.make,
             "mileage": result.mileage,
             "price": result.price,
-            "photo": url_for('static', filename='car_photos/' + result.photo, _external=True),
+            "photo": url_for('static', filename='car_photos/' + cars_photos[result.id], _external=True),
             "user_id": result.user_id,
             "model": result.model,
             "engine_size": result.engine_size,
@@ -264,10 +280,28 @@ def check_term(selected_term):
     for key in selected_term.keys():
         if key == "price":
             value_list = [int(value) for value in selected_term['price'].split(',')]
-            for price in range(value_list[0], value_list[1]):
-                formated_price = f'{price:,}'
-                selected_term['price'] = formated_price
-                results = Car.query.filter_by(**selected_term).all()
+            if value_list[0] == 0:
+                max_price = f'{1000000:,}'
+                results = Car.query.filter(Car.price <= max_price).all()
+            elif value_list[1] == 0:
+                min_price = f'{3500000:,}'
+                results = Car.query.filter(Car.price >= min_price).all()
+            else:
+                min_price = f'{value_list[0]:,}'
+                max_price = f'{value_list[1]:,}'
+                results = Car.query.filter(Car.price.between(min_price, max_price)).all()
+        elif key == "mileage":
+            value_list = [int(value) for value in selected_term['mileage'].split(',')]
+            min_mileage = f'{value_list[0]:,}'
+            max_mileage = f'{value_list[1]:,}'
+            results = Car.query.filter(Car.mileage.between(min_mileage, max_mileage)).all()
+            print(min_mileage, max_mileage, results)
+        elif key == "engine_size":
+            value_list = [int(value) for value in selected_term['engine_size'].split(',')]
+            min_engine_size = f'{value_list[0]:,}'
+            max_engine_size = f'{value_list[1]:,}'
+            results = Car.query.filter(Car.engine_size.between(min_engine_size, max_engine_size)).all()
+            print(min_engine_size, max_engine_size, results)
         else:
             results = Car.query.filter_by(**selected_term).all()
     return results
@@ -282,12 +316,22 @@ def dropdown_search():
     car_objects = []
 
     for result in output:
+
+        cars_photos = {}
+
+        car_photo = SellPhotos.query.filter_by(car_id=result.id).first()
+        if not car_photo:
+            photo = 'default.jpeg'
+        else:
+            photo = car_photo.photos
+        cars_photos[result.id] = photo
+
         car = {
             "id": result.id,
             "make": result.make,
             "mileage": result.mileage,
             "price": result.price,
-            "photo": url_for('static', filename='car_photos/' + result.photo, _external=True),
+            "photo": url_for('static', filename='car_photos/' + cars_photos[result.id], _external=True),
             "user_id": result.user_id,
             "model": result.model,
             "engine_size": result.engine_size,
@@ -316,20 +360,21 @@ def lend_car():
             car.is_approved = True
         db.session.add(car)
         db.session.commit()
-        return redirect(url_for('car_for_hire_photos'))
+        return redirect(url_for('car_for_hire_photos', car_id=car.id))
     return render_template('lend_car.html', form=form)
 
 
-@app.route('/car_for_hire_photos', methods=['GET', 'POST'])
-def car_for_hire_photos():
+@app.route('/car_for_hire_photos/<int:car_id>', methods=['GET', 'POST'])
+def car_for_hire_photos(car_id):
     form = LendCarPhotosForm()
     if form.validate_on_submit():
-        picture_file = save_car_picture(form.car_photos.data)
-        photo = SellPhotos(photos=picture_file)
-        db.session.add(photo)
-        db.session.commit()
+        for file in form.car_photos.data:
+            picture_file = save_car_picture(file)
+            photo = HirePhotos(photos=picture_file, car_id=car_id)
+            db.session.add(photo)
+            db.session.commit()
         if current_user.is_admin:
-            flash('You have uploaded a car for hire', 'success')
+            flash('You have successfully uploaded your car for hire', 'success')
         else:
             flash('You have uploaded a car for hire. An admin will approve your request shortly.', 'success')
         return redirect(url_for('home'))
@@ -339,6 +384,17 @@ def car_for_hire_photos():
 @app.route('/hire_car', methods=['GET', 'POST'])
 def hire_car():
     cars = LendCar.query.all()
+
+    cars_photos = {}
+
+    for car in cars:
+        car_photo = HirePhotos.query.filter_by(car_id=car.id).first()
+        if not car_photo:
+            photo = 'default.jpeg'
+        else:
+            photo = car_photo.photos
+        cars_photos[car.id] = photo
+
     brand_list = []
     model_list = []
     fuel_list = []
@@ -354,26 +410,39 @@ def hire_car():
             if car.seats not in seats_list:
                 seats_list.append(car.seats)
     return render_template('hire_car.html', cars=cars, brand_list=brand_list, model_list=model_list,
-                           seats_list=seats_list, fuel_list=fuel_list)
+                           seats_list=seats_list, fuel_list=fuel_list, cars_photos=cars_photos)
 
 
 @app.route('/<int:car_id>/car_for_hire', methods=['GET', 'POST'])
 def car_hire_info(car_id):
     car_for_hire = LendCar.query.get_or_404(car_id)
 
-    return render_template('car_hire_info.html', car_for_hire=car_for_hire)
+    cars_photos = {}
+
+    car_photo = HirePhotos.query.filter_by(car_id=car_id).first()
+    if not car_photo:
+        photo = 'default.jpeg'
+    else:
+        photo = car_photo.photos
+    cars_photos[car_for_hire.id] = photo
+
+    return render_template('car_hire_info.html', car_for_hire=car_for_hire, cars_photos=cars_photos)
 
 
 @app.route('/<int:car_id>/car_for_sale', methods=['GET', 'POST'])
 def car_sales_info(car_id):
     car_for_sale = Car.query.get_or_404(car_id)
+
+    cars_photos = {}
+
     car_photo = SellPhotos.query.filter_by(car_id=car_id).first()
     if not car_photo:
         photo = 'default.jpeg'
     else:
         photo = car_photo.photos
+    cars_photos[car_for_sale.id] = photo
 
-    return render_template('car_sales_info.html', car_for_sale=car_for_sale, photo=photo)
+    return render_template('car_sales_info.html', car_for_sale=car_for_sale, cars_photos=cars_photos)
 
 
 @app.route('/approve_car<int:car_id>/car_for_sale', methods=['GET', 'POST'])

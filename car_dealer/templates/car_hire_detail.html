@@ -4,37 +4,30 @@
           <div class="container" style="margin-top: 10px">
                <div class="row">
                     <div class="col-md-6 col-xs-12">
-                         <div>
-                              <img src="{{ url_for('static', filename='car_photos/' + car_for_hire.photo) }}" alt="" class="img-responsive wc-image">
-                         </div>
-
-                         <br>
-
-                         <div class="row">
-                              <div class="col-sm-4 col-xs-6">
-                                   <div>
-                                        <img src="../static/images/product-1-720x480.jpg" alt="" class="img-responsive">
-                                   </div>
-
-                                   <br>
+                         {% if main_photos %}
+                              <div>
+                                   <img src="{{ url_for('static', filename='car_photos/' + main_photos.photos) }}" alt="" class="img-responsive wc-image">
                               </div>
 
-                              <div class="col-sm-4 col-xs-6">
-                                   <div>
-                                        <img src="../static/images/product-2-720x480.jpg" alt="" class="img-responsive">
+                              <br>
+
+                              <div class="row">
+                                   {% for photo in extra_photos %}
+                                   <div class="col-sm-4 col-xs-6">
+                                        <div>
+                                             <img src="{{ url_for('static', filename='car_photos/' + photo.photos) }}" alt="" class="img-responsive">
+                                        </div>
+
+                                        <br>
                                    </div>
 
-                                   <br>
+                                   {% endfor %}
                               </div>
-
-                              <div class="col-sm-4 col-xs-6">
-                                   <div>
-                                        <img src="../static/images/product-3-720x480.jpg" alt="" class="img-responsive">
-                                   </div>
-
-                                   <br>
+                         {% else %}
+                              <div>
+                                   <img src="{{ url_for('static', filename='car_photos/' + 'default.jpeg') }}" alt="" class="img-responsive wc-image">
                               </div>
-                         </div>
+                         {% endif %}
                     </div>
 
                     <div class="col-md-6 col-xs-12">

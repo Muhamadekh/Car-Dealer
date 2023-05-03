@@ -108,8 +108,8 @@ $("#searchBox").on("input",(e)=>{
           cars_searched += `<div class="col-lg-6 col-md-4 col-sm-6">
                 <div class="courses-thumb courses-thumb-secondary">
                      <div class="courses-top">
-                          <div class="courses-image">
-                               <img src="${data[i].photo}" class="img-responsive" alt="${data[i].make}">
+                          <div class="courses-image" style="height: 250px;overflow: hidden;">
+                               <img src="${data[i].photo}" class="img-responsive" alt="${data[i].make}" style="height: 100%;width: auto;display: block;">
                           </div>
                           <div class="courses-date">
                                <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage}</span>
@@ -127,7 +127,7 @@ $("#searchBox").on("input",(e)=>{
                      </div>
 
                      <div class="courses-info">
-                          <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
+                          <a href="/car_details${data[i].id}/full_carSale_details" class="section-btn btn btn-primary btn-block">View More</a>
                      </div>
                 </div>
           </div>`
@@ -143,6 +143,8 @@ function dropDownSelection(){
   let car_fuel = $("#carFuel").val()
   let car_seats = $("#carSeats").val()
   let car_price = $("#carPrice").val()
+  let car_mileage = $("#carMileage").val()
+  let car_engine_size = $("#carEngineSize").val()
   console.log(car_condition, car_make, car_model, car_fuel, car_seats, car_price)
   var obj = {}
   if (car_condition != ''){
@@ -163,6 +165,12 @@ function dropDownSelection(){
   if (car_fuel != ''){
     Object.assign(obj,{"fuel":car_fuel})
   }
+  if (car_mileage != ''){
+    Object.assign(obj,{"mileage":car_mileage})
+  }
+  if (car_engine_size != ''){
+    Object.assign(obj,{"engine_size":car_engine_size})
+  }
   console.log(JSON.stringify(obj))
   let cars_div = $("#cars_results")
   cars_div.html("")
@@ -175,8 +183,9 @@ function dropDownSelection(){
           cars_selected += `<div class="col-lg-6 col-md-4 col-sm-6">
                 <div class="courses-thumb courses-thumb-secondary">
                      <div class="courses-top">
-                          <div class="courses-image">
-                               <img src="${data[i].photo}" class="img-responsive" alt="${data[i].make}">
+                          <div class="courses-image" style="height: 250px;overflow: hidden;">
+                               <img src="${data[i].photo}" class="img-responsive" alt="${data[i].make}"
+                               style="height: 100%;width: auto;display: block;">
                           </div>
                           <div class="courses-date">
                                <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage}</span>
@@ -194,7 +203,7 @@ function dropDownSelection(){
                      </div>
 
                      <div class="courses-info">
-                          <a href="#" class="section-btn btn btn-primary btn-block">View More</a>
+                          <a href="/car_details${data[i].id}/full_carSale_details" class="section-btn btn btn-primary btn-block">View More</a>
                      </div>
                 </div>
           </div>`
@@ -225,6 +234,14 @@ $("#carPrice").on("input",(e)=> {
 dropDownSelection()
 })
 
+$("#carMileage").on("input",(e)=> {
+dropDownSelection()
+})
+
+$("#carEngineSize").on("input",(e)=> {
+dropDownSelection()
+})
+
 
 const sendEmail = () => {
     console.log("Am called")
@@ -241,3 +258,4 @@ const sendEmail = () => {
     })
 
 }
+

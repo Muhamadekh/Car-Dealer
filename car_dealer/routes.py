@@ -485,7 +485,6 @@ def car_sales_info(car_id):
 def approve_car_for_sale(car_id):
     car_for_sale = Car.query.get_or_404(car_id)
     car_for_sale.is_approved = True
-    db.session.add(car_for_sale)
     db.session.commit()
     flash("You have confirmed this car", "success")
     return redirect(url_for('admin'))
@@ -495,7 +494,6 @@ def approve_car_for_sale(car_id):
 def approve_car_for_hire(car_id):
     car_for_hire = LendCar.query.get_or_404(car_id)
     car_for_hire.is_approved = True
-    db.session.add(car_for_hire)
     db.session.commit()
     flash("You have confirmed this car", "success")
     return redirect(url_for('admin'))

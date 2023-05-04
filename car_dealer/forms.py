@@ -79,8 +79,8 @@ class SellCarPhotosForm(FlaskForm):
 
 
 class LendCarForm(FlaskForm):
-    brand = StringField('Car Brand', validators=[DataRequired(), Length(min=5, max=20)])
-    model = StringField('Car Model', validators=[DataRequired(), Length(min=5, max=20)])
+    brand = StringField('Car Brand', validators=[DataRequired(), Length(min=3, max=20)])
+    model = StringField('Car Model', validators=[DataRequired(), Length(min=3, max=20)])
     daily_rate = IntegerField('Daily Rate', validators=[DataRequired()])
     fuel = SelectField('Fuel Type', choices=fuel_drop_list)
     color = StringField('Colour', validators=[DataRequired(), Length(max=10)])

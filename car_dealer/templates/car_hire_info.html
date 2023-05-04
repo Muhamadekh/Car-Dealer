@@ -18,7 +18,7 @@
                        <div class="courses-detail">
                             <h3><a href="#">{{ car_for_hire.description }}</a></h3>
 
-                            <p class="lead"><strong>Ksh {{ car_for_hire.daily_rate }}</strong></p>
+                            <p class="lead"><strong>Ksh {{ "{:,.0f}".format(car_for_hire.daily_rate ) }}</strong></p>
 
                             <p>{{ car_for_hire.fuel }} </p>
 

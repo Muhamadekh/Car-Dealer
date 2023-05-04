@@ -36,7 +36,7 @@
 
                               <p class="lead">{{ car_for_sale.description }}</p>
                               
-                              <p class="lead"><strong class="text-primary">Price: Ksh {{ car_for_sale.price }}</strong></p>
+                              <p class="lead"><strong class="text-primary">Price: Ksh {{ "{:,.0f}".format(car_for_sale.price ) }}</strong></p>
 
                               <div class="row">
                                    <div class="col-md-4 col-sm-6">
@@ -75,7 +75,7 @@
 
                                              <br>
 
-                                             <strong>{{ car_for_sale.mileage }}</strong>
+                                             <strong>{{ "{:,.0f}".format(car_for_sale.mileage ) }}</strong>
                                         </p>
                                    </div>
 
@@ -95,7 +95,7 @@
 
                                              <br>
 
-                                             <strong>{{ car_for_sale.engine_size }} cc</strong>
+                                             <strong>{{ "{:,.0f}".format(car_for_sale.engine_size ) }} cc</strong>
                                         </p>
                                    </div>
 
@@ -172,7 +172,7 @@
 
                                              <br>
 
-                                             <strong><a href="tel:456789123">456789123</a></strong>
+                                             <strong><a href="tel:456789123">+254 723 822 133</a></strong>
                                         </p>
 
                                         <p>

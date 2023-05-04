@@ -36,7 +36,7 @@
 
                               <p class="lead">{{ car_for_hire.description }}</p>
 
-                              <p class="lead"><strong class="text-primary">Daily Rate: Ksh {{ car_for_hire.daily_rate }}</strong></p>
+                              <p class="lead"><strong class="text-primary">Daily Rate: Ksh {{ "{:,.0f}".format(car_for_hire.daily_rate ) }}</strong></p>
 
                               <div class="row">
                                    <div class="col-md-4 col-sm-6">
@@ -124,7 +124,7 @@
 
                                              <br>
 
-                                             <strong><a href="tel:456789123">0721775127</a></strong>
+                                             <strong><a href="tel:456789123">+254 723 822 133</a></strong>
                                         </p>
 
                                         <p>

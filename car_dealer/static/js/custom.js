@@ -188,18 +188,18 @@ function dropDownSelection(){
                                style="height: 100%;width: auto;display: block;">
                           </div>
                           <div class="courses-date">
-                               <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage}</span>
-                               <span title="Author"><i class="fa fa-cube"></i> ${data[i].engine_size}cc</span>
+                               <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage.toLocaleString()}</span>
+                               <span title="Author"><i class="fa fa-cube"></i> ${data[i].engine_size.toLocaleString()} CC</span>
                                <span title="Views"><i class="fa fa-cog"></i> ${data[i].gearbox}</span>
                           </div>
                      </div>
 
                      <div class="courses-detail">
                           <h3><a href="#">${data[i].description}</a></h3>
+                            
+                          <p class="lead"><strong>Ksh ${data[i].price.toLocaleString()}</strong></p>
 
-                          <p class="lead"><strong>Ksh ${data[i].price}</strong></p>
-
-                          <p>${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].mfg_year} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
+                          <p>${data[i].make} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].model} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].fuel} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].mfg_year} &nbsp;&nbsp;/&nbsp;&nbsp; ${data[i].condition}</p>
                      </div>
 
                      <div class="courses-info">
@@ -258,4 +258,85 @@ const sendEmail = () => {
     })
 
 }
+
+function hireDropDown(){
+  let car_rate = $("#carRate").val()
+  let car_hire_model = $("#carHireModel").val()
+  let car_hire_brand = $("#carBrand").val()
+  let car_hire_seats = $("#carHireSeats").val()
+  let car_hire_fuel = $("#carHireFuel").val()
+
+  console.log(car_rate)
+  var obj = {}
+  if (car_rate != ''){
+    Object.assign(obj,{"daily_rate":car_rate})
+  }
+  if (car_hire_brand != ''){
+    Object.assign(obj,{"brand":car_hire_brand})
+  }
+  if (car_hire_fuel != ''){
+    Object.assign(obj,{"fuel":car_hire_fuel})
+  }
+  if (car_hire_seats != ''){
+    Object.assign(obj,{"seats":car_hire_seats})
+  }
+  if (car_hire_model != ''){
+    Object.assign(obj,{"model":car_hire_model})
+  }
+  console.log(JSON.stringify(obj))
+  let cars_div = $("#cars_hire_results")
+  cars_div.html("")
+  getData(`http://${window.location.hostname}:5000/car_hire_search`,"POST",obj,(data)=> {
+    let cars_selected = "";
+    if (data.length == 0){
+      cars_selected = "<div class='text-center'><h2> There are no cars with these specifications </h2></div>"
+    }
+        for (let i = 0; i < data.length; i++) {
+          cars_selected += `<div class="col-lg-6 col-md-4 col-sm-6">
+                <div class="courses-thumb courses-thumb-secondary">
+                     <div class="courses-top">
+                          <div class="courses-image" style="height: 250px;overflow: hidden;">
+                               <img src="${data[i].photo}" class="img-responsive" alt="${data[i].brand}"
+                               style="height: 100%;width: auto;display: block;">
+                          </div>
+                          <div class="courses-date">
+                               <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].model}</span>
+                               <span title="Author"><i class="fa fa-cube"></i> ${data[i].fuel.toLocaleString()}</span>
+                               <span title="Views"><i class="fa fa-cog"></i> ${data[i].gearbox}</span>
+                          </div>
+                     </div>
+
+                     <div class="courses-detail">
+                          <h3><a href="#">${data[i].description}</a></h3>
+                            
+                          <p class="lead"><strong>Ksh ${data[i].daily_rate.toLocaleString()}</strong></p>
+                     </div>
+
+                     <div class="courses-info">
+                          <a href="/${data[i].id}/full_carHire_details" class="section-btn btn btn-primary btn-block">View More</a>
+                     </div>
+                </div>
+          </div>`
+        }
+
+    cars_div.html(cars_selected)
+})}
+$("#carRate").on("input",(e)=> {
+hireDropDown()
+})
+
+$("#carHireModel").on("input",(e)=> {
+hireDropDown()
+})
+
+$("#carHireFuel").on("input",(e)=> {
+hireDropDown()
+})
+
+$("#carHireSeats").on("input",(e)=> {
+hireDropDown()
+})
+$("#carBrand").on("input",(e)=> {
+hireDropDown()
+})
 

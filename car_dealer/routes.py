@@ -55,7 +55,7 @@ def contact_us():
 
         mail.send(message)
         flash("Your message has been received! We will get back to you soon. if you need a prompt response please\
-                        contact us on +254 721 775 127", "success")
+                        contact us on +254 723 822 133", "success")
 
         return redirect(url_for('home'))
 
@@ -71,7 +71,7 @@ def register():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
-        if user.email == 'root@gmail.com':
+        if user.email == 'hirbatemotors@gmail.com':
             user.is_admin = True
         db.session.commit()
         flash(f'An account has been created for {form.username.data} suscessfully!', 'success')
@@ -138,9 +138,9 @@ def save_car_picture(form_picture):
 def sell_car():
     form = SellCarForm()
     if form.validate_on_submit():
-        car = Car(make=form.make.data, model=form.model.data, mileage=f'{form.mileage.data:,}', price=f'{form.price.data:,}',
+        car = Car(make=form.make.data, model=form.model.data, mileage=form.mileage.data, price=form.price.data,
                   user_id=current_user.id, condition=form.condition.data, fuel=form.fuel.data, seats=form.seats.data,
-                  mfg_year=form.mfg_year.data,  engine_size=f'{form.engine_size.data:,}', description=form.description.data,
+                  mfg_year=form.mfg_year.data,  engine_size=form.engine_size.data, description=form.description.data,
                   gearbox=form.gearbox.data, color=form.color.data)
         if current_user.is_admin:
             car.is_approved = True
@@ -228,7 +228,7 @@ def car_for_hire_details(car_id):
     main_photos = []
     extra_photos = []
 
-    car_photo = SellPhotos.query.filter_by(car_id=car_for_hire.id).all()
+    car_photo = HirePhotos.query.filter_by(car_id=car_for_hire.id).all()
     if not car_photo:
         photo = 'default.jpeg'
     else:
@@ -280,30 +280,22 @@ def check_term(selected_term):
     for key in selected_term.keys():
         if key == "price":
             value_list = [int(value) for value in selected_term['price'].split(',')]
-            if value_list[0] == 0:
-                max_price = f'{1000000:,}'
-                results = Car.query.filter(Car.price <= max_price).all()
-            elif value_list[1] == 0:
-                min_price = f'{3500000:,}'
-                results = Car.query.filter(Car.price >= min_price).all()
-            else:
-                min_price = f'{value_list[0]:,}'
-                max_price = f'{value_list[1]:,}'
-                results = Car.query.filter(Car.price.between(min_price, max_price)).all()
+            min_price = value_list[0]
+            max_price = value_list[1]
+            results = Car.query.filter(Car.price.between(min_price, max_price)).all()
         elif key == "mileage":
             value_list = [int(value) for value in selected_term['mileage'].split(',')]
-            min_mileage = f'{value_list[0]:,}'
-            max_mileage = f'{value_list[1]:,}'
+            min_mileage = value_list[0]
+            max_mileage = value_list[1]
             results = Car.query.filter(Car.mileage.between(min_mileage, max_mileage)).all()
-            print(min_mileage, max_mileage, results)
         elif key == "engine_size":
             value_list = [int(value) for value in selected_term['engine_size'].split(',')]
-            min_engine_size = f'{value_list[0]:,}'
-            max_engine_size = f'{value_list[1]:,}'
+            min_engine_size = value_list[0]
+            max_engine_size = value_list[1]
             results = Car.query.filter(Car.engine_size.between(min_engine_size, max_engine_size)).all()
-            print(min_engine_size, max_engine_size, results)
         else:
             results = Car.query.filter_by(**selected_term).all()
+        print(results)
     return results
 
 
@@ -348,12 +340,56 @@ def dropdown_search():
     return jsonify(car_objects)
 
 
+@app.route('/car_hire_search', methods=['GET', 'POST'])
+def car_hire_search():
+    selected_term = request.json
+    for key in selected_term.keys():
+        if key == "daily_rate":
+            value_list = [int(value) for value in selected_term['daily_rate'].split(',')]
+            min_rate = value_list[0]
+            max_rate = value_list[1]
+            results = LendCar.query.filter(LendCar.daily_rate.between(min_rate, max_rate)).all()
+        else:
+            results = LendCar.query.filter_by(**selected_term).all()
+
+    car_objects = []
+
+    for result in results:
+
+        cars_photos = {}
+
+        car_photo = HirePhotos.query.filter_by(car_id=result.id).first()
+        if not car_photo:
+            photo = 'default.jpeg'
+        else:
+            photo = car_photo.photos
+        cars_photos[result.id] = photo
+
+        car = {
+            "id": result.id,
+            "make": result.brand,
+            "mileage": result.gearbox,
+            "daily_rate": result.daily_rate,
+            "photo": url_for('static', filename='car_photos/' + cars_photos[result.id], _external=True),
+            "user_id": result.user_id,
+            "model": result.model,
+            "fuel": result.fuel,
+            "description": result.description,
+            "seats": result.seats
+
+        }
+        car_objects.append(car)
+    print(car_objects)
+
+    return jsonify(car_objects)
+
+
 @app.route('/lend_car', methods=['GET', 'POST'])
 @login_required
 def lend_car():
     form = LendCarForm()
     if form.validate_on_submit():
-        car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=f'{form.daily_rate.data:,}', fuel=form.fuel.data,
+        car = LendCar(brand=form.brand.data, model=form.model.data, daily_rate=form.daily_rate.data, fuel=form.fuel.data,
                       seats=form.seats.data, description=form.description.data, color=form.color.data,
                       user_id=current_user.id, gearbox=form.gearbox.data)
         if current_user.is_admin:
@@ -468,17 +504,23 @@ def approve_car_for_hire(car_id):
 @app.route('/car_for_sale/<int:car_id>/delete_car', methods=['POST'])
 def delete_car_for_sale(car_id):
     car = Car.query.get_or_404(car_id)
+    photos = SellPhotos.query.filter_by(car_id=car.id).all()
+    for photo in photos:
+        db.session.delete(photo)
     db.session.delete(car)
     db.session.commit()
-    flash("You have deleted this car.", "success")
+    flash("You have deleted this car.", "danger")
     return redirect(url_for('admin'))
 
 @app.route('/car_for_hire/<int:car_id>/delete_car', methods=['POST'])
 def delete_car_for_hire(car_id):
     car = LendCar.query.get_or_404(car_id)
+    photos = HirePhotos.query.filter_by(car_id=car.id).all()
+    for photo in photos:
+        db.session.delete(photo)
     db.session.delete(car)
     db.session.commit()
-    flash("You have deleted this car.", "success")
+    flash("You have deleted this car.", "danger")
     return redirect(url_for('admin'))
 
 

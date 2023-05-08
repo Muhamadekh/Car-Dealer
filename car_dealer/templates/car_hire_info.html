@@ -5,7 +5,7 @@
              <div class="col-lg-6 col-md-4 col-sm-6">
                   <div class="courses-thumb courses-thumb-secondary">
                        <div class="courses-top">
-                            <div class="courses-image" style="height: 320px;overflow: hidden;">
+                            <div class="courses-image" style="height: 30px;overflow: hidden;">
                                  <img src="{{ url_for('static', filename='car_photos/' + cars_photos[car_for_hire.id]) }}" class="img-responsive"
                                       alt="{{ car_for_hire.brand }}" style="height: 100%;width: auto;display: block;">
                             </div>
@@ -23,11 +23,9 @@
                             <p>{{ car_for_hire.fuel }} </p>
 
                        </div>
-
-                       <div class="courses-info">
                          {% if car_for_hire.is_approved %}
                               <div class="col-md-6">
-                                   <button class="section-btn btn btn-primary btn-block" data-toggle="modal" style="background-color: red; color: yellow"
+                                   <button class="section-btn btn btn-primary btn-block" data-toggle="modal" style="background-color: red; color: white"
                                            data-target="#deleteModal">Delete</button>
                               </div>
                          {% else %}
@@ -35,7 +33,6 @@
                                   <a href="{{ url_for ('approve_car_for_hire', car_id=car_for_hire.id) }}" class="section-btn btn btn-primary btn-block">Confirm</a>
                               </div>
                          {% endif %}
-                       </div>
                   </div>
              </div>
         </div>

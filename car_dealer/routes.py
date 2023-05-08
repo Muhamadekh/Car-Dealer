@@ -48,8 +48,8 @@ def contact_us():
             phone: {phone}
             message:
             {request.form.get('message')} """
-        message = Message('A message from Hirbate Motors', sender='muhamadekhhaji99@gmail.com',
-                          recipients=['mohahaji99@gmail.com'])
+        message = Message('A message from Hirbate Motors', sender='hirbatemotors@gmail.com',
+                          recipients=['hirbateahmed@gmail.com'])
 
         message.body = msg
 
@@ -277,25 +277,31 @@ def livesearch():
 
 
 def check_term(selected_term):
-    for key in selected_term.keys():
-        if key == "price":
-            value_list = [int(value) for value in selected_term['price'].split(',')]
-            min_price = value_list[0]
-            max_price = value_list[1]
-            results = Car.query.filter(Car.price.between(min_price, max_price)).all()
-        elif key == "mileage":
-            value_list = [int(value) for value in selected_term['mileage'].split(',')]
-            min_mileage = value_list[0]
-            max_mileage = value_list[1]
-            results = Car.query.filter(Car.mileage.between(min_mileage, max_mileage)).all()
-        elif key == "engine_size":
-            value_list = [int(value) for value in selected_term['engine_size'].split(',')]
-            min_engine_size = value_list[0]
-            max_engine_size = value_list[1]
-            results = Car.query.filter(Car.engine_size.between(min_engine_size, max_engine_size)).all()
-        else:
-            results = Car.query.filter_by(**selected_term).all()
+    print(selected_term)
+    terms_dict = {k:v for k,v in selected_term.items() if k in ['condition', 'make', 'model', 'fuel', 'seats']}
+    results = Car.query.filter_by(**terms_dict).all()
+    if "price" in selected_term:
+        value_list = [int(value) for value in selected_term['price'].split(',')]
+        min_price = value_list[0]
+        max_price = value_list[1]
+
+        price_results = Car.query.filter(Car.price.between(min_price, max_price)).all()
+        print(price_results)
         print(results)
+        results = list(set(results).intersection(set(price_results)))
+    if "mileage" in selected_term:
+        value_list = [int(value) for value in selected_term['mileage'].split(',')]
+        min_mileage = value_list[0]
+        max_mileage = value_list[1]
+        mileage_results = Car.query.filter(Car.mileage.between(min_mileage, max_mileage)).all()
+        results = list(set(results).intersection(set(mileage_results)))
+    if "engine_size" in selected_term:
+        value_list = [int(value) for value in selected_term['engine_size'].split(',')]
+        min_engine_size = value_list[0]
+        max_engine_size = value_list[1]
+        engine_results = Car.query.filter(Car.engine_size.between(min_engine_size, max_engine_size)).all()
+        results = list(set(results).intersection(set(engine_results)))
+    print(results)
     return results
 
 
@@ -524,7 +530,7 @@ def delete_car_for_hire(car_id):
 
 def send_reset_email(user):
     token = User.get_reset_token(user)
-    msg = Message('Password Reset Request', sender='muhamadekhhaji99@gmail.com', recipients=[user.email])
+    msg = Message('Password Reset Request', sender='hirbatemotors@gmail.com', recipients=[user.email])
 
     msg.body = f""" To reset your password, visit the following link.
 {url_for('reset_token', token=token, _external=True)}   

@@ -1,6 +1,6 @@
 from car_dealer import db, login_manager, app
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime
 from flask_login import UserMixin, current_user
 
 

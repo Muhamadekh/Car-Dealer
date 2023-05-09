@@ -10,11 +10,6 @@
                     <p class="lead">Get a comfortable car for an affordable daily rate.</p>
                </div>
           </div>
-          <div class="container">
-               <div class="form-outline" style="margin-bottom: 40px;">
-                 <input type="search" id="searchBox" class="form-control" placeholder="Search cars by Brand, Model, etc" aria-label="Search" />
-               </div>
-          </div>
      </section>
 
      <section class="section-background">
@@ -76,12 +71,10 @@
                                         <select class="form-control" id="carHireSeats">
                                              <option value="">-- All --</option>
                                              {% for seat in seats_list %}
-                                                  <option value="{{fuel }}">{{ seat }}</option>
+                                                  <option value="{{ seat }}">{{ seat }}</option>
                                              {% endfor %}
                                         </select>
                                    </div>
-
-                                   <button type="submit" class="section-btn btn btn-primary btn-block" onclick="myfunc()">Search</button>
                               </form>
                          </div>
                     </div>
@@ -109,7 +102,7 @@
 
                                                        <p class="lead"><strong>Ksh {{ "{:,.0f}".format(car.daily_rate) }}</strong></p>
 
-                                                       <p>{{ car.fuel }} </p>
+                                                       <p>{{ car.fuel }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.location }}</p>
                                                   </div>
 
                                                   <div class="courses-info">

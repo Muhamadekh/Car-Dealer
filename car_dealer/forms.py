@@ -66,6 +66,7 @@ class SellCarForm(FlaskForm):
     color = StringField('Colour', validators=[DataRequired(), Length(max=10)])
     price = FloatField('Price', validators=[DataRequired()])
     fuel = SelectField('Fuel Type', choices=fuel_drop_list, default=1)
+    location = StringField('Location of the car', validators=[DataRequired(), Length(max=30)])
     seats = IntegerField('Number of Seats', validators=[DataRequired()])
     mfg_year = IntegerField('Manufacture Year', validators=[DataRequired()])
     engine_size = IntegerField('Engine Size in CC', validators=[DataRequired()])
@@ -86,6 +87,7 @@ class LendCarForm(FlaskForm):
     color = StringField('Colour', validators=[DataRequired(), Length(max=10)])
     gearbox = SelectField('Gearbox', choices=gearbox_drop_list, default=1)
     seats = IntegerField('Number of Seats', validators=[DataRequired()])
+    location = StringField('Location of the car', validators=[DataRequired(), Length(max=30)])
     description = TextAreaField('Short description', validators=[DataRequired(), Length(min=10, max=140)])
     upload = SubmitField('Next')
 

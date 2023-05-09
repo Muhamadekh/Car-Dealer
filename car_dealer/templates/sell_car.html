@@ -173,6 +173,21 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
+                            {{ form.location.label (class="form-control-label")}}
+                            {% if form.location.errors %}
+                                {{ form.location (class="form-control form-control-lg is-invalid")}}
+                                <ul class="invalid-feedback">
+                                    {% for error in form.location.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ form.location (class="form-control form-control-lg")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
                             {{ form.description.label (class="form-control-label")}}
                             {% if form.description.errors %}
                                 {{ form.description (class="form-control form-control-lg is-invalid")}}

@@ -20,7 +20,7 @@
 
                             <p class="lead"><strong>Ksh {{ "{:,.0f}".format(car_for_hire.daily_rate ) }}</strong></p>
 
-                            <p>{{ car_for_hire.fuel }} </p>
+                            <p>{{ car_for_hire.fuel }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car_for_sale.location }}</p>
 
                        </div>
                          {% if car_for_hire.is_approved %}

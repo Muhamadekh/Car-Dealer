@@ -277,17 +277,13 @@ def livesearch():
 
 
 def check_term(selected_term):
-    print(selected_term)
     terms_dict = {k:v for k,v in selected_term.items() if k in ['condition', 'make', 'model', 'fuel', 'seats']}
     results = Car.query.filter_by(**terms_dict).all()
     if "price" in selected_term:
         value_list = [int(value) for value in selected_term['price'].split(',')]
         min_price = value_list[0]
         max_price = value_list[1]
-
         price_results = Car.query.filter(Car.price.between(min_price, max_price)).all()
-        print(price_results)
-        print(results)
         results = list(set(results).intersection(set(price_results)))
     if "mileage" in selected_term:
         value_list = [int(value) for value in selected_term['mileage'].split(',')]
@@ -301,7 +297,6 @@ def check_term(selected_term):
         max_engine_size = value_list[1]
         engine_results = Car.query.filter(Car.engine_size.between(min_engine_size, max_engine_size)).all()
         results = list(set(results).intersection(set(engine_results)))
-    print(results)
     return results
 
 
@@ -346,21 +341,27 @@ def dropdown_search():
     return jsonify(car_objects)
 
 
+def check_hire_term(selected_term):
+    terms_dict = {k: v for k, v in selected_term.items() if k in ['brand', 'model', 'fuel', 'seats']}
+    results = LendCar.query.filter_by(**terms_dict).all()
+    if "daily_rate" in selected_term:
+        value_list = [int(value) for value in selected_term['daily_rate'].split(',')]
+        min_rate = value_list[0]
+        max_rate = value_list[1]
+        rate_results = LendCar.query.filter(LendCar.daily_rate.between(min_rate, max_rate)).all()
+        results = list(set(results).intersection(set(rate_results)))
+    return results
+
+
 @app.route('/car_hire_search', methods=['GET', 'POST'])
 def car_hire_search():
     selected_term = request.json
-    for key in selected_term.keys():
-        if key == "daily_rate":
-            value_list = [int(value) for value in selected_term['daily_rate'].split(',')]
-            min_rate = value_list[0]
-            max_rate = value_list[1]
-            results = LendCar.query.filter(LendCar.daily_rate.between(min_rate, max_rate)).all()
-        else:
-            results = LendCar.query.filter_by(**selected_term).all()
+    print(selected_term)
+    search_results = check_hire_term(selected_term)
 
     car_objects = []
 
-    for result in results:
+    for result in search_results:
 
         cars_photos = {}
 
@@ -385,7 +386,6 @@ def car_hire_search():
 
         }
         car_objects.append(car)
-    print(car_objects)
 
     return jsonify(car_objects)
 

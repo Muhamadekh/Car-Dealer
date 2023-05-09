@@ -117,7 +117,7 @@
                                         </select>
                                    </div>
 
-                                   <button type="submit" class="section-btn btn btn-primary btn-block" onclick="myfunc()">Search</button>
+<!--                                   <button type="submit" class="section-btn btn btn-primary btn-block" onclick="myfunc()">Search</button>-->
                               </form>
                          </div>
                     </div>
@@ -143,7 +143,7 @@
                                                   <div class="courses-detail">
                                                        <h3><a href="#">{{ car.description }}</a></h3>
 
-                                                       <p class="lead"><strong>Ksh {{ "{:,.0f}".format(car.price) }}</strong></p>
+                                                       <p class="lead"><strong>Ksh {{ "{:,.0f}".format(car.price) }}</strong>&nbsp;&nbsp;/&nbsp;&nbsp; {{ car.location }}</p>
 
                                                        <p>{{ car.make }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.model }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.fuel }} &nbsp;&nbsp;/&nbsp;&nbsp;
                                                             {{ car.mfg_year }} &nbsp;&nbsp;/&nbsp;&nbsp; {{ car.condition }}</p>

@@ -54,6 +54,7 @@ class Car(db.Model):
     mfg_year = db.Column(db.Integer, nullable=False)
     engine_size = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
+    location = db.Column(db.String(30), nullable=False)
     is_approved = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     photo_reference = db.relationship('SellPhotos', backref='Car', lazy=True)

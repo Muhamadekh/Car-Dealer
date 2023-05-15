@@ -73,6 +73,7 @@ class LendCar(db.Model):
     daily_rate = db.Column(db.Integer, nullable=False)
     fuel = db.Column(db.String, nullable=False)
     seats = db.Column(db.Integer, nullable=False)
+    location = db.Column(db.String(30), nullable=False)
     description = db.Column(db.Text, nullable=False)
     is_approved = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

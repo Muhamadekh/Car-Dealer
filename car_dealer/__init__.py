@@ -13,7 +13,7 @@ with open('/etc/config.json') as config_file:
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ca756c5133bfd45cb5f1ff0c7a21d624'
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////home/hirbate/db/project.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = config.get('SQLALCHEMY_DATABASE_URI')
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True

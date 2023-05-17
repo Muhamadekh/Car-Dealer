@@ -569,3 +569,70 @@ def reset_token(token):
         flash(f'Your password has been updated', 'success')
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+
+@app.route('/edit_car_for_sale/<int:car_id>', methods=['GET', 'POST'])
+def edit_car_for_sale(car_id):
+    car = Car.query.get_or_404(car_id)
+    form = SellCarForm()
+    if request.method == 'GET':
+        form.condition.data = car.condition
+        form.gearbox.data = car.gearbox
+        form.color.data = car.color
+        form.make.data = car.make
+        form.mileage.data = car.mileage
+        form.price.data = car.price
+        form.model.data = car.model
+        form.seats.data = car.seats
+        form.mfg_year.data = car.mfg_year
+        form.engine_size.data = car.engine_size
+        form.description.data = car.description
+        form.location.data = car.location
+        form.fuel.data = car.fuel
+    if form.validate_on_submit():
+        car.condition = form.condition.data
+        car.gearbox = form.gearbox.data
+        car.color = form.color.data
+        car.make = form.make.data
+        car.mileage = form.mileage.data
+        car.price = form.price.data
+        car.model = form.model.data
+        car.seats = form.seats.data
+        car.mfg_year = form.mfg_year.data
+        car.engine_size = form.engine_size.data
+        car.description = form.description.data
+        car.location = form.location.data
+        car.fuel = form.fuel.data
+        db.session.commit()
+        return redirect(url_for('admin'))
+    return render_template('edit_car_sale.html', title='Edit Car', form=form)
+
+
+@app.route('/edit_car_for_hire/<int:car_id>', methods=['GET', 'POST'])
+def edit_car_for_hire(car_id):
+    car = LendCar.query.get_or_404(car_id)
+    form = LendCarForm()
+    if request.method == 'GET':
+        form.brand.data = car.brand
+        form.color.data = car.color
+        form.gearbox.data = car.gearbox
+        form.daily_rate.data = car.daily_rate
+        form.model.data = car.model
+        form.seats.data = car.seats
+        form.description.data = car.description
+        form.location.data = car.location
+        form.fuel.data = car.fuel
+    if form.validate_on_submit():
+        car.brand = form.brand.data
+        car.gearbox = form.gearbox.data
+        car.color = form.color.data
+        car.daily_rate = form.daily_rate.data
+        car.model = form.model.data
+        car.seats = form.seats.data
+        car.description = form.description.data
+        car.location = form.location.data
+        car.fuel = form.fuel.data
+        db.session.commit()
+        return redirect(url_for('admin'))
+    return render_template('edit_car_hire.html', title='Edit Car', form=form)
+

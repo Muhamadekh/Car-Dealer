@@ -1104,7 +1104,7 @@ https://templatemo.com/tm-516-known
     /*}*/
 
     #zoomImage:hover img {
-      transform: scale(3);
+      transform: scale(2);
       position: absolute;
       z-index: 1;
       pointer-events: none;

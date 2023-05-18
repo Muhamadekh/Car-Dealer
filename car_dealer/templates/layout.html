@@ -34,7 +34,7 @@
 
           <!-- MENU -->
           <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
-               <div class="container-fluid" style="margin-left: 100px;">
+               <div class="container-fluid">
 
                     <div class="navbar-header">
                          <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -63,10 +63,10 @@
                                    <li><a href="{{ url_for ('contact_us') }}">Contact Us</a></li>
                               {% endif %}
                               {% if current_user.is_authenticated %}
-                                   <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('logout') }}">Logout</a></li>
+                                   <li><a class="ml-auto" href="{{ url_for ('logout') }}">Logout</a></li>
                               {% else %}
-                                   <li><a class="ms-auto" style="margin-left: 200px;" href="{{ url_for ('register') }}">Register</a></li>
-                                   <li><a class="ms-auto" href="{{ url_for ('login') }}">Login</a></li>
+                                   <li><a class="ml-auto" href="{{ url_for ('register') }}">Register</a></li>
+                                   <li><a class="ml-auto" href="{{ url_for ('login') }}">Login</a></li>
                               {% endif %}
                          </ul>
                     </div>

@@ -13,7 +13,7 @@
 
                               <div class="row">
                                    {% for photo in extra_photos %}
-                                   <div class="col-sm-4 col-xs-6">
+                                   <div class="col-md-4 col-xs-12" id="zoomImage">
                                         <div>
                                              <img src="{{ url_for('static', filename='car_photos/' + photo.photos) }}" alt="" class="img-responsive">
                                         </div>
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="col-md-6 col-xs-12">
-                         <form action="#" method="post" class="form">
+                         <form action="#" method="post" class="form mt-4">
                               <h2>Extended details for this car</h2>
 
                               <p class="lead">{{ car_for_hire.description }}</p>

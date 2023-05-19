@@ -1091,22 +1091,22 @@ https://templatemo.com/tm-516-known
     display: block; /* make sure the image is a block element to ensure it respects the height of the container */
   }
 
-  #zoomImage {
-        width: auto;
-        height: 200px;
-        margin: 0 auto;
-        position: relative;
-    }
+  /*#zoomImage {*/
+  /*      !*width: auto;*!*/
+  /*      !*height: 200px;*!*/
+  /*      !*margin: 0 auto;*!*/
+  /*      position: relative;*/
+  /*  }*/
 
-    /*#zoomImage img {*/
-    /*    !*width: 100%;*!*/
-    /*    transition: 0.3s all ease-in-out;*/
-    /*}*/
+  /*  !*#zoomImage img {*!*/
+  /*  !*    !*width: 100%;*!*!*/
+  /*  !*    transition: 0.3s all ease-in-out;*!*/
+  /*  !*}*!*/
 
-    #zoomImage:hover img {
-      transform: scale(2);
-      position: absolute;
-      z-index: 1;
-      pointer-events: none;
-      margin: 20px;
-    }
+  /*  #zoomImage:hover img {*/
+  /*    transform: scale(2);*/
+  /*    position: absolute;*/
+  /*    z-index: 1;*/
+  /*    pointer-events: none;*/
+  /*    margin: 20px;*/
+  /*  }*/

@@ -185,7 +185,7 @@ function dropDownSelection(){
                      <div class="courses-top">
                           <div class="courses-image" style="height: 250px;overflow: hidden;">
                                <img src="${data[i].photo}" class="img-responsive" alt="${data[i].make}"
-                               style="height: 100%;width: auto;display: block;">
+                               style="height: 100%;width: 100%;display: block;">
                           </div>
                           <div class="courses-date">
                                <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].mileage.toLocaleString()}</span>
@@ -297,7 +297,7 @@ function hireDropDown(){
                      <div class="courses-top">
                           <div class="courses-image" style="height: 250px;overflow: hidden;">
                                <img src="${data[i].photo}" class="img-responsive" alt="${data[i].brand}"
-                               style="height: 100%;width: auto;display: block;">
+                               style="height: 100%;width: 100%;display: block;">
                           </div>
                           <div class="courses-date">
                                <span title="Author"><i class="fa fa-dashboard"></i> ${data[i].model}</span>

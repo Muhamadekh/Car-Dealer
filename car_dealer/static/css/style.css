@@ -1092,7 +1092,7 @@ https://templatemo.com/tm-516-known
   }
 
   #zoomImage {
-        width: 200px;
+        width: auto;
         height: 200px;
         margin: 0 auto;
         position: relative;

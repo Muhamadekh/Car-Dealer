@@ -12,16 +12,16 @@
                               <br>
 
                               <div class="row">
-                                   {% for photo in extra_photos %}
-                                   <div class="col-md-4 col-xs-12" id="zoomImage">
-                                        <div>
-                                             <img src="{{ url_for('static', filename='car_photos/' + photo.photos) }}" alt="" class="img-responsive">
-                                        </div>
+                                   <div class="slideshow-container">
+                                       {% for photo in extra_photos %}
+                                         <div class="mySlides">
+                                           <img src="{{ url_for('static', filename='car_photos/' + photo.photos) }}" alt="Image {{ loop.index }}" class="slideshow-image">
+                                         </div>
+                                       {% endfor %}
 
-                                        <br>
+                                       <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                       <a class="next" onclick="plusSlides(1)">&#10095;</a>
                                    </div>
-
-                                   {% endfor %}
                               </div>
                          {% else %}
                               <div>

@@ -1092,16 +1092,16 @@ https://templatemo.com/tm-516-known
   }
 
   /*#zoomImage {*/
-  /*      !*width: auto;*!*/
-  /*      !*height: 200px;*!*/
-  /*      !*margin: 0 auto;*!*/
+  /*      width: auto;*/
+  /*      height: 100%;*/
+  /*      margin: 0 auto;*/
   /*      position: relative;*/
   /*  }*/
 
-  /*  !*#zoomImage img {*!*/
-  /*  !*    !*width: 100%;*!*!*/
-  /*  !*    transition: 0.3s all ease-in-out;*!*/
-  /*  !*}*!*/
+  /*  #zoomImage img {*/
+  /*      width: 100%;*/
+  /*      !*transition: 0.3s all ease-in-out;*!*/
+  /*  }*/
 
   /*  #zoomImage:hover img {*/
   /*    transform: scale(2);*/
@@ -1110,3 +1110,42 @@ https://templatemo.com/tm-516-known
   /*    pointer-events: none;*/
   /*    margin: 20px;*/
   /*  }*/
+
+    .slideshow-container {
+      max-width: 400px;
+      height: 300px;
+      position: relative;
+      margin-left: 15px;
+      margin-bottom: 20px;
+      margin-right: 30px;
+    }
+
+    .mySlides {
+      display: none;
+    }
+
+    .slideshow-image {
+      width: 100%;
+      height: auto;
+    }
+
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      font-weight: bold;
+      padding: 8px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+
+    .prev {
+      left: 8px;
+    }
+
+    .next {
+      right: 8px;
+    }

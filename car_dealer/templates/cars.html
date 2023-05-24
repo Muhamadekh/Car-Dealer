@@ -129,9 +129,9 @@
                                         <div class="col-lg-6 col-md-4 col-sm-6">
                                              <div class="courses-thumb courses-thumb-secondary">
                                                   <div class="courses-top">
-                                                       <div class="courses-image" style="height: 320px;overflow: hidden;">
+                                                       <div class="courses-image" style="height: 290px;overflow: hidden;">
                                                             <img src="{{ url_for('static', filename='car_photos/' + cars_photos[car.id]) }}" class="img-responsive"
-                                                                 alt="{{ car.make }}" style="height: 100%;width: auto;display: block;">
+                                                                 alt="{{ car.make }}" style="height: 100%;width: 100%;object-fit: cover">
                                                        </div>
                                                        <div class="courses-date">
                                                             <span title="Author"><i class="fa fa-dashboard"></i> {{ "{:,.0f}".format(car.mileage) }}</span>
